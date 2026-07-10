@@ -19,6 +19,9 @@ pub mod messages;
 // TODO Look into conditional compilation like in C/C++
 // https://stackoverflow.com/questions/27632660/how-do-i-use-conditional-compilation-with-cfg-and-cargo
 
+// Here is what unwrap and unwrap_or does, I didn't fully understand it.
+// https://stackoverflow.com/questions/36362020/what-is-unwrap-in-rust-and-what-is-it-used-for
+
 fn main() {
 
     // Read the .env file
