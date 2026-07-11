@@ -6,10 +6,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Esp32-Test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/esp32-new-test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/esp32_test/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Dev/target" />
       <excludeFolder url="file://$MODULE_DIR$/src/target" />
       <excludeFolder url="file://$MODULE_DIR$/Esp32-Test/target" />
       <excludeFolder url="file://$MODULE_DIR$/esp32-new-test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/esp32_test/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

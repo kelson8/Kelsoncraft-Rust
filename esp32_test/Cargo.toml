@@ -7,7 +7,7 @@ resolver = "2"
 rust-version = "1.82"
 
 [[bin]]
-name = "esp32-new-test"
+name = "esp32_test"
 harness = false # do not use the built-in cargo test harness -> resolve rust-analyzer errors
 
 [profile.release]
@@ -35,8 +35,13 @@ embassy-time = { version = "0.5", features = ["generic-queue-8"] }
 anyhow = "1.0.103"
 
 # https://esp32.implrust.com/oled/crates.html
-ssd1306 = { version = "0.10.0", features = ["async"] }
-embedded-graphics = "0.8.1"
+
+# TODO Figure out why these break ESP32 support
+#ssd1306 = { version = "0.10.0", features = ["async"] }
+#embedded-graphics = "0.8.1"
+
+#esp-hal = "1.1.1"
+#tokio = { version = "1.52.3", features = ["rt", "rt-multi-thread", "macros"] }
 
 [build-dependencies]
 embuild = "0.33"
