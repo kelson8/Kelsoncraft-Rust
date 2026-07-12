@@ -5,6 +5,14 @@ Power LED on GPIO 26 - This gets turned on when the code is run.
 
 So far, this program is just blinking the blue and green LEDs on GPIO 25 and GPIO 27.
 
+I finally got the SSD1306 display working.
+
+This guide was used
+* https://esp32.implrust.com/oled/hello-rust/index.html
+
+And some code from this GitHub repo
+* https://github.com/ImplFerris/esp32-projects/tree/main/hello-oled
+
 ### Running/Building
 It is a good idea to have a button that can reset the ESP32 for easily switching to download/flash mode
 without unplugging and plugging in the usb each time.
