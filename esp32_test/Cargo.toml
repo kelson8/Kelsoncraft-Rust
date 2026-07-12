@@ -3,6 +3,7 @@ edition      = "2024"
 name         = "esp32_test"
 rust-version = "1.88"
 version      = "0.1.0"
+default-run = "esp32_test"
 
 [[bin]]
 name = "esp32_test"
@@ -33,6 +34,10 @@ critical-section = "1.2.0"
 
 ssd1306 = { version = "0.10.0", features = ["async"] }
 embedded-graphics = "0.8.1"
+
+# This could be used for later, matches my C++ font used for PlatformIO
+# https://docs.rs/embedded-picofont/latest/embedded_picofont/
+#embedded-picofont = "0.2.1"
 #
 
 # For fine tuning these settings, please refer to https://doc.rust-lang.org/cargo/reference/profiles.html

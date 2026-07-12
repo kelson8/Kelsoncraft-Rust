@@ -23,8 +23,9 @@ use esp_hal::timer::timg::TimerGroup;
 use esp_println as _;
 // use esp_hal::time::{Duration, Instant};
 
+use esp_hal::delay::Delay;
 
-use esp_hal::gpio::{Level, Output, OutputConfig};
+use esp_hal::gpio::{Level, Output, OutputConfig, Input, InputConfig, Pull};
 
 // For SSD1306
 // https://esp32.implrust.com/oled/hello-rust/index.html
@@ -38,12 +39,25 @@ use ssd1306::{I2CDisplayInterface, Ssd1306Async, prelude::*};
 
 // Embedded Graphics
 use embedded_graphics::{
-    mono_font::{MonoTextStyleBuilder, ascii::FONT_6X10},
+    mono_font::{MonoTextStyle, MonoTextStyleBuilder, ascii::FONT_6X10, ascii::FONT_10X20},
     pixelcolor::BinaryColor,
     prelude::Point,
     prelude::*,
     text::{Baseline, Text},
 };
+
+// New for separating this into multiple files.
+mod oled_text;
+
+use oled_text::font_for_size;
+
+use oled_text::{
+    draw_line1,
+    draw_line2,
+    draw_line3,
+    draw_line4,
+};
+
 //
 
 
@@ -80,9 +94,18 @@ fn blocking_delay(duration: Duration) {
 // Line 2: 25
 // Line 3: 40
 // Line 4: 55
-fn draw_line1(text_size: u8, x: i32, text: &str) {
+// fn draw_line1(text_size: u8, x: i32, text: &str) {
+//
+// }
 
-}
+// fn font_for_size(text_size: u8) -> &'static embedded_graphics::mono_font::MonoFont<'static> {
+//     match text_size {
+//         0..=1 => &FONT_6X10,
+//         _ => &FONT_10X20,
+//     }
+// }
+
+
 
 //
 
@@ -100,9 +123,19 @@ async fn main(spawner: Spawner) -> ! {
     // generator parameters: --chip esp32 -o esp32-wroom-32e
 
     // LED blink time in ms, 1000 is 1 second.
-    let led_blink_time = 1000;
+    let _led_blink_time = 1000;
 
-    let config = esp_hal::Config::default().with_cpu_clock(CpuClock::max());
+    // Button delay time for when the buttons are pressed in ms.
+    let led_button_delay_time = 25;
+
+    // Size for the font, not sure how this works.
+    let text_size = 1;
+
+    let config = esp_hal::Config::default()
+        .with_cpu_clock(CpuClock::max());
+
+    // https://docs.rs/esp-hal/latest/esp_hal/gpio/struct.Input.html#method.new
+    let input_config = InputConfig::default().with_pull(Pull::Up);
 
     // https://esp32.implrust.com/std-to-no-std/peripherals.html
     let peripherals = esp_hal::init(config);
@@ -140,15 +173,10 @@ async fn main(spawner: Spawner) -> ! {
     //
 
     // Display text on SSD1306
-    let text_style = MonoTextStyleBuilder::new()
-        .font(&FONT_6X10)
-        .text_color(BinaryColor::On)
-        .build();
-
-    Text::with_baseline("Hello, Rust!", Point::new(0, 16), text_style, Baseline::Top)
-        .draw(&mut display)
-        .unwrap();
-
+    draw_line1(&mut display, text_size, 5, "Hello, world!").unwrap();
+    draw_line2(&mut display, text_size, 5, "Line 2").unwrap();
+    draw_line3(&mut display, text_size, 5, "Line 3").unwrap();
+    draw_line4(&mut display, text_size, 5, "Line 4").unwrap();
 
     // Write data to the display
     display.flush().await.unwrap();
@@ -161,11 +189,24 @@ async fn main(spawner: Spawner) -> ! {
     // Always turn on the power LED by default
     power_led.set_high();
 
-    // Misc LEDs
-    let mut blue_led = Output::new(peripherals.GPIO25, Level::High, OutputConfig::default());
-    let mut green_led = Output::new(peripherals.GPIO27, Level::High, OutputConfig::default());
+    // Misc LEDs, off by default.
+    let mut blue_led = Output::new(peripherals.GPIO25, Level::Low, OutputConfig::default());
+    let mut green_led = Output::new(peripherals.GPIO27, Level::Low, OutputConfig::default());
     // let mut blue_led = PinDriver::output(peripherals.pins.gpio25)?;
     // let mut green_led = PinDriver::output(peripherals.pins.gpio27)?;
+
+    // LED status, I may do something like in my C++ code
+    // https://github.com/kelson8/KCNet-ESP32-SSD1306/blob/main/src/main.cpp#L41-L47
+    // https://github.com/kelson8/KCNet-ESP32-SSD1306/blob/main/src/main.cpp#L92-L124
+    let mut blue_led_toggled = false;
+    let mut green_led_toggled = false;
+
+
+    // https://dev.to/vaishnav_sabari_girish/embedded-rust-on-the-esp32-interfacing-button-with-esp32-kd9
+    // Buttons
+    let blue_led_button = Input::new(peripherals.GPIO12, input_config);
+    let green_led_button = Input::new(peripherals.GPIO14, input_config);
+    let delay = Delay::new();
 
     // The following pins are used to bootstrap the chip. They are available
     // for use, but check the datasheet of the module for more information on them.
@@ -183,15 +224,52 @@ async fn main(spawner: Spawner) -> ! {
     let _ = peripherals.GPIO11;
     let _ = peripherals.GPIO16;
     let _ = peripherals.GPIO20;
-
+    
     loop {
-        // Blink the LEDs, TODO Move this into a function.
-        green_led.toggle();
-        blue_led.toggle();
-        blocking_delay(Duration::from_millis(led_blink_time));
-
         // Not sure if this is needed here.
-        Timer::after(Duration::from_secs(1)).await;
+        // Well this was just causing a 1 second delay for the program.
+        // Timer::after(Duration::from_secs(1)).await;
+
+
+
+        //-----
+        // Blink the LEDs, TODO Move this into a function.
+        // green_led.toggle();
+        // blue_led.toggle();
+        // blocking_delay(Duration::from_millis(led_blink_time));
+
+        //-----
+        // Buttons
+        // TODO Fix these to work right.
+        // TODO Move this into a single function later, for now this is how this'll work..
+        // TODO Make this store the button state.
+        // Blue LED handling
+        if blue_led_button.is_low() && !blue_led_toggled {
+            blue_led.set_high();
+            // info!("Blue LED on");
+            delay.delay_millis(led_button_delay_time);
+            blue_led_toggled = true;
+        } else {
+            blue_led.set_low();
+            blue_led_toggled = false;
+            // info!("Blue LED off");
+            // delay.delay_millis(led_button_delay_time);
+        }
+
+        // Green LED handling
+        if green_led_button.is_low() && !green_led_toggled {
+            green_led.set_high();
+            // info!("Green LED on");
+            delay.delay_millis(led_button_delay_time);
+            green_led_toggled = true;
+        } else {
+            green_led.set_low();
+            green_led_toggled = false;
+            // info!("Green LED off");
+            // delay.delay_millis(led_button_delay_time);
+        }
+
+
     }
 
     // for inspiration have a look at the examples at https://github.com/esp-rs/esp-hal/tree/esp-hal-v1.1.0/examples
