@@ -2,8 +2,10 @@
 // This is going to be me testing and experimenting with Rust.
 // https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html
 
+// use std::str::FromStr;
 use crate::messages::WELCOME_MESSAGE;
-use crate::system_info::{get_current_os, get_system_info};
+
+use crate::system_info::get_system_info;
 
 use dotenv::dotenv;
 
@@ -12,7 +14,9 @@ pub mod number_generator_test;
 mod number_guesser;
 pub mod system_info;
 pub mod messages;
-
+pub mod password_hashing;
+pub mod string_testing;
+pub mod age_encryption;
 // I would like to look into the Iced Gui for Rust in the future.
 // https://book.iced.rs/first-steps.html
 
@@ -21,6 +25,18 @@ pub mod messages;
 
 // Here is what unwrap and unwrap_or does, I didn't fully understand it.
 // https://stackoverflow.com/questions/36362020/what-is-unwrap-in-rust-and-what-is-it-used-for
+
+
+
+// https://doc.rust-lang.org/book/ch05-01-defining-structs.html
+// struct User {
+//     email: String,
+//     username: String,
+//     hashed_password: String,
+// }
+
+// List of Crptographic libraries for encryption and other stuff
+// https://cryptography.rs/
 
 fn main() {
 
@@ -61,5 +77,17 @@ fn main() {
     // let random_number = number_generator_test::generate_random_number();
     // println!("Random number: {random_number}");
 
+    // Password hashing
+    // let test_password = String::from("Test");
+    //
+    // let hashed_password = hash_password(&test_password);
+    //
+    // println!("Hashed password: {}", hashed_password);
 
+
+    // Encryption with Age
+    // age_encryption();
+
+    // Decryption with Age
+    // age_decryption();
 }
