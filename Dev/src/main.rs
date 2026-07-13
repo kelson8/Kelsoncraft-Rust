@@ -8,6 +8,8 @@ use crate::messages::WELCOME_MESSAGE;
 use crate::system_info::get_system_info;
 
 use dotenv::dotenv;
+use crate::password_hashing::hash_password;
+use crate::struct_test::print_struct_values;
 
 // https://rust-lang.github.io/book/ch07-05-separating-modules-into-different-files.html
 pub mod number_generator_test;
@@ -17,6 +19,7 @@ pub mod messages;
 pub mod password_hashing;
 pub mod string_testing;
 pub mod age_encryption;
+pub mod struct_test;
 // I would like to look into the Iced Gui for Rust in the future.
 // https://book.iced.rs/first-steps.html
 
@@ -26,14 +29,14 @@ pub mod age_encryption;
 // Here is what unwrap and unwrap_or does, I didn't fully understand it.
 // https://stackoverflow.com/questions/36362020/what-is-unwrap-in-rust-and-what-is-it-used-for
 
-
-
 // https://doc.rust-lang.org/book/ch05-01-defining-structs.html
-// struct User {
-//     email: String,
-//     username: String,
-//     hashed_password: String,
-// }
+// This allows me to use this directly in a println!
+#[derive(Debug)]
+struct User {
+    email: String,
+    username: String,
+    hashed_password: String,
+}
 
 // List of Crptographic libraries for encryption and other stuff
 // https://cryptography.rs/
@@ -79,11 +82,15 @@ fn main() {
 
     // Password hashing
     // let test_password = String::from("Test");
-    //
+    // This just slows down the program, I need to implement Async.
     // let hashed_password = hash_password(&test_password);
+
+
     //
     // println!("Hashed password: {}", hashed_password);
 
+    // Struct testing
+    print_struct_values();
 
     // Encryption with Age
     // age_encryption();
