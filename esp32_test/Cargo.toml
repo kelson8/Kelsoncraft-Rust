@@ -5,6 +5,9 @@ rust-version = "1.88"
 version      = "0.1.0"
 default-run = "esp32_test"
 
+authors = ["kelson8 <kelson@kelsoncraft.net>"]
+license = "MIT"
+
 [[bin]]
 name = "esp32_test"
 path = "./src/bin/main.rs"

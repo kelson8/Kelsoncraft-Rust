@@ -8,8 +8,10 @@ use crate::messages::WELCOME_MESSAGE;
 use crate::system_info::get_system_info;
 
 use dotenv::dotenv;
-use crate::password_hashing::hash_password;
-use crate::struct_test::print_struct_values;
+use crate::base64_testing::{base64_decode, base64_encode};
+// use crate::ip_testing::ip_address_test;
+// use crate::password_hashing::hash_password;
+// use crate::struct_test::print_struct_values;
 
 // https://rust-lang.github.io/book/ch07-05-separating-modules-into-different-files.html
 pub mod number_generator_test;
@@ -20,6 +22,8 @@ pub mod password_hashing;
 pub mod string_testing;
 pub mod age_encryption;
 pub mod struct_test;
+pub mod ip_testing;
+pub mod base64_testing;
 // I would like to look into the Iced Gui for Rust in the future.
 // https://book.iced.rs/first-steps.html
 
@@ -85,12 +89,24 @@ fn main() {
     // This just slows down the program, I need to implement Async.
     // let hashed_password = hash_password(&test_password);
 
-
     //
     // println!("Hashed password: {}", hashed_password);
 
+    // Base64 testing
+    // The encoding and decoding part of this works, it just needs error handling added to it.
+    // let text_to_encode = "Test";
+    // let encoded_text = base64_encode(&text_to_encode.to_string());
+    // println!("{} to base64: {}", text_to_encode, encoded_text);
+    //
+    // // TODO Add error handling to this, if the text isn't base64 it gives errors.
+    // let decoded_text = base64_decode(&encoded_text.to_string());
+    // println!("{} to text: {}", text_to_encode, decoded_text);
+
     // Struct testing
-    print_struct_values();
+    // print_struct_values();
+
+    // IP Address testing
+    // ip_address_test();
 
     // Encryption with Age
     // age_encryption();
