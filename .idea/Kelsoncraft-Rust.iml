@@ -7,11 +7,19 @@
       <sourceFolder url="file://$MODULE_DIR$/Esp32-Test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/esp32-new-test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/esp32_test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/cli-test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/ftlk-test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/gtk-test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/misc-test/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Dev/target" />
       <excludeFolder url="file://$MODULE_DIR$/src/target" />
       <excludeFolder url="file://$MODULE_DIR$/Esp32-Test/target" />
       <excludeFolder url="file://$MODULE_DIR$/esp32-new-test/target" />
       <excludeFolder url="file://$MODULE_DIR$/esp32_test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/cli-test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/ftlk-test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/gtk-test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/misc-test/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

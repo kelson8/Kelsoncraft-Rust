@@ -1,0 +1,7 @@
+[package]
+name = "kcnet-ftlk-test"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+fltk = { version = "^1.5", features = ["fltk-bundled"] }

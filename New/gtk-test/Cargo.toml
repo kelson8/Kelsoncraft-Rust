@@ -1,0 +1,8 @@
+[package]
+name = "gtk-test"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+gtk = "0.19.0"
+glib = "0.22.10"
