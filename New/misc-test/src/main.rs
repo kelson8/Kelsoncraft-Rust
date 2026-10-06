@@ -1,6 +1,12 @@
 
 // https://doc.rust-lang.org/rust-by-example/hello/print.html
 
+// extern crate test_library
+
+// Now this almost works in here.
+// use test_library::{*};
+use test_library::{json_handler::json_handler};
+
 use vector2d::Vector2D;
 use rand::RngExt;
 
@@ -16,9 +22,12 @@ use argon2::{
     Argon2
 };
 
-use serde::{Deserialize, Serialize};
-use serde_json::Result;
 use std::{env, fs};
+
+use std::future::Future;
+use std::pin::Pin;
+use std::task::{Context, Poll};
+use std::time::{Duration, Instant};
 
 // https://docs.rs/vector2d/latest/vector2d/
 
@@ -45,41 +54,6 @@ enum PlayerState {
     Paused,
     Dead,
 }
-
-#[derive(Serialize, Deserialize)]
-struct MapLocation {
-    // position: Vector2D<f32>,
-    pos_x: f32,
-    pos_y: f32,
-    pos_z: f32,
-    heading: f32
-}
-
-// Print a test location with JSON.
-// Now this prints from a JSON file, I need to figure out how to parse it.
-// And write back into this.
-// I may build a location reader/writer in Rust for my ReVC Lua scripts.
-fn print_location(json_path: &str) -> Result<()> {
-    // let location = MapLocation {
-    //     pos_x: 200.0,
-    //     pos_y: 200.0,
-    //     pos_z: 200.0,
-    //     heading: 180.0
-    // };
-
-    // https://stackoverflow.com/questions/63657897/how-to-read-json-file-with-serde
-    let data = fs::read_to_string(json_path).expect("Unable to read file");
-    let res: serde_json::Value = serde_json::from_str(&data).expect("Unable to parse json");
-
-    // Serialize it to a JSON string
-    let j = serde_json::to_string_pretty(&res)?;
-    // let j = serde_json::to_string(&location)?;
-
-    println!("{}", j);
-
-    Ok(())
-}
-
 
 // Very basic player for testing structs
 struct Player {
@@ -164,8 +138,39 @@ fn get_config_path() -> String {
 }
 //
 
+//------------
+/// Async test
+struct Delay {
+    when: Instant,
+}
 
-fn main() {
+impl Future for Delay {
+    type Output = &'static str;
+
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>)
+            -> Poll<&'static str>
+    {
+        if Instant::now() >= self.when {
+            println!("Hello world");
+            Poll::Ready("done")
+        } else {
+            // Ignore this line for now.
+            cx.waker().wake_by_ref();
+            Poll::Pending
+        }
+    }
+}
+
+//--------------------
+
+async fn test_async() {
+
+}
+
+// Async support from Tokio
+// https://tokio.rs/tokio/tutorial/async
+#[tokio::main]
+async fn main() {
     // println!("Hello, world!");
 
     let number_to_convert = 400;
@@ -174,7 +179,7 @@ fn main() {
     // Display the working directory
     // https://doc.rust-lang.org/std/env/fn.current_dir.html
     let path = env::current_dir();
-    println!("The current folder is: {}", path.unwrap().display());
+    // println!("The current folder is: {}", path.unwrap().display());
 
     // Convert a number to hex
 
@@ -209,11 +214,48 @@ fn main() {
     //         player.status, player.position, player.heading);
 
     // Print a test location from JSON.
-    print_location("test.json").unwrap();
+    // print_location("test.json").unwrap();
+
+    let random_wait_time = rng.random_range(3000..10000);
+
+    // Async test
+    // This mostly just waits for a few seconds.
+    // let when = Instant::now() + Duration::from_millis(random_wait_time);
+    // let future = Delay { when };
+    //
+    //
+    // // Async is working! I can run this while the other function is running.
+    // // Although if I put this under future.await or under assert it won't work.
+    // println!("The current folder is: {}", env::current_dir().unwrap().display());
+    // // println!("Waiting for {} seconds", when.elapsed().as_secs());
+    // println!("Waiting for {} seconds", random_wait_time);
+    //
+
+    // Library testing
+    // TODO Make this work with the test_library create.
+
+    // test_library::public_function();
+
+    let random_number = test_library::generate_random_number(1, 1000);
+    // println!("Random number: {}", random_number);
+
+
+    // json_handler::read_json_file("test.json");
+
+    // json_handler::print_location("test.json", "Location4").expect("Error reading JSON");
+
+    // Write the list of locations to the JSON.
+    json_handler::write_locations("test.json");
+
+    // Print a test location from JSON.
+    json_handler::print_location("test.json", "Location1").expect("Error reading JSON");
 
 
 
+    //
 
+    // let out = future.await;
+    // assert_eq!(out, "done");
 
     // SHA256 and other hashing
     // let test_hashed = sha256_hash_string("test".to_string());

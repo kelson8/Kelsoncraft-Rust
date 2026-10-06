@@ -11,6 +11,7 @@
       <sourceFolder url="file://$MODULE_DIR$/New/ftlk-test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/gtk-test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/misc-test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/test_library/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Dev/target" />
       <excludeFolder url="file://$MODULE_DIR$/src/target" />
       <excludeFolder url="file://$MODULE_DIR$/Esp32-Test/target" />
@@ -20,6 +21,7 @@
       <excludeFolder url="file://$MODULE_DIR$/New/ftlk-test/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/gtk-test/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/misc-test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/test_library/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -22,5 +22,6 @@ fn main() {
 
     for _ in 0..args.count {
         println!("Hello {}!", args.name);
+
     }
 }

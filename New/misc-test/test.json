@@ -1,7 +1,14 @@
 {
-  "location1": {
-    "pos_x": 200.0,
-    "pos_y": 150.0,
-    "pos_z": 15.0
+  "Location1": {
+    "name": "Location1",
+    "pos_x": 180.0,
+    "pos_y": 180.0,
+    "pos_z": 14.0
+  },
+  "Location2": {
+    "name": "Location2",
+    "pos_x": 140.1999969482422,
+    "pos_y": 150.3000030517578,
+    "pos_z": 14.5
   }
 }

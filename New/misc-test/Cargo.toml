@@ -20,3 +20,9 @@ argon2 = "0.6.0"
 password-hash = "0.6.1"
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.151"
+tokio = { version = "1.53.2", features = ["rt", "rt-multi-thread", "macros"] }
+
+# https://users.rust-lang.org/t/how-to-use-a-rust-rlib-library-in-a-project/113454/9
+# Requires my test_library package in this Git repo.
+# I will move things over to this and rename it to kcnet_library_rs later.
+test_library = { path = "../test_library" }
