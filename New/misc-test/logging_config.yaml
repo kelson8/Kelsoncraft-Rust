@@ -1,0 +1,34 @@
+# For log4rs
+# https://tms-dev-blog.com/log-to-a-file-in-rust-with-log4rs/
+
+# This works well for logging to the console and to a log file!
+# TODO Make this clear out the old log file while I am testing.
+
+appenders:
+  my_stdout:
+    kind: console
+    encoder:
+      pattern: "{h({d(%Y-%m-%d %H:%M:%S)(utc)} - {l}: {m}{n})}"
+  my_file_logger:
+#    kind: file
+    kind: rolling_file
+    path: "log/my.log"
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)(utc)} - {h({l})}: {m}{n}"
+
+    policy:
+      trigger:
+        kind: size
+        limit: 50kb
+      roller:
+        kind: fixed_window
+        base: 1
+        count: 10
+        pattern: "log/my{}.log"
+
+root:
+#  level: trace
+  level: debug
+  appenders:
+    - my_stdout
+    - my_file_logger

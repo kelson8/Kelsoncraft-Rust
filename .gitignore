@@ -25,3 +25,8 @@ rustc-ice-*.txt
 
 # Environment files
 .env
+
+# Logs and extras
+*.log
+*.bak
+test-bak.json

@@ -25,7 +25,11 @@ use rand::RngExt;
 // Logging
 // https://github.com/rust-lang/log
 // use log::{info, trace, warn};
-use log::{info};
+// use log::{info};
+
+use log::{debug, error, info, trace, warn};
+use log4rs;
+
 use test_library::json_handler::{Player, PlayerState};
 //
 
@@ -37,6 +41,10 @@ use std::task::{Context, Poll};
 use std::time::{Duration, Instant};
 use rand::rngs::ThreadRng;
 // https://docs.rs/vector2d/latest/vector2d/
+
+// For logging to file
+use log::LevelFilter;
+//
 
 // Guide on the question mark operator
 // https://tutorials.dodatech.com/rust-systems/question-mark-operator/
@@ -179,6 +187,13 @@ async fn test_async(mut rng: ThreadRng) {
 /// TODO Make this log to a file later, for now it just logs to the console.
 pub fn log_text(text: &str) {
     info!("[Misc-Test]: {}", text);
+
+    // https://docs.rs/simple-logging/latest/simple_logging/
+    // TODO Figure this out for file logging.
+    // simple_logging::log_to_file("test.log", LevelFilter::Info).expect("Error logging to file");
+
+
+
 }
 
 //---------------
@@ -241,7 +256,19 @@ async fn main() {
     // println!("Hello, world!");
 
     // Setup the logger
-    env_logger::init();
+    // env_logger::init();
+
+    // Setup the new Log4s logger
+    log4rs::init_file("logging_config.yaml", Default::default()).unwrap();
+
+    // These will log to the file and the console.
+    // trace!("detailed tracing info");
+    // debug!("debug info");
+    // info!("relevant general info");
+    // warn!("warning this program doesn't do much");
+    // error!("error message here");
+    //
+
 
     // Load the .env file for later use
     // There is a .env.example file in here which can be renamed to .env and used.
