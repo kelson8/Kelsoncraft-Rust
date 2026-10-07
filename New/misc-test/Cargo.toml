@@ -26,3 +26,8 @@ tokio = { version = "1.53.2", features = ["rt", "rt-multi-thread", "macros"] }
 # Requires my test_library package in this Git repo.
 # I will move things over to this and rename it to kcnet_library_rs later.
 test_library = { path = "../test_library" }
+log = "0.4.34"
+# https://www.pistack.xyz/posts/2026-07-27-rust-logging-libraries-env-logger-log4rs-tracing-slog/
+env_logger = "0.11.11"
+
+dotenvy = "0.15"

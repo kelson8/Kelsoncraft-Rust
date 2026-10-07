@@ -37,6 +37,7 @@ I may add more to this later.
 | Project Name      | Description                                                                                  |
 |-------------------|----------------------------------------------------------------------------------------------|
 | age-test          | Testing with encryption and decryption with Age.                                             |
+| call-c-test       | Testing with calling C code in Rust, and calling Rust in C.                                  |
 | cli-test          | Misc cli testing with command argument libraries.                                            |
 | ftlk-test         | A GUI test to play around with.                                                              |
 | gtk-test          | Testing with GTK4, so far this doesn't work                                                  |

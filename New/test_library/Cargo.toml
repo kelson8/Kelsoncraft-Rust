@@ -2,6 +2,7 @@
 name = "test_library"
 version = "0.1.0"
 edition = "2024"
+license = "MIT"
 # This is mostly a test project, shouldn't be on crates.io just yet.
 publish = false
 

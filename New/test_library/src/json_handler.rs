@@ -1,15 +1,43 @@
 use serde::{Deserialize, Serialize};
-use serde_json::{Result, json};
-use std::{env, fs};
+// use serde_json::{Result, json};
+// use std::{env, fs};
 
 use std::error::Error;
 use std::fmt;
-
 use vector2d::Vector2D;
+// use vector2d::Vector2D;
 
 // https://stackoverflow.com/questions/51550167/how-to-manually-return-a-result-boxdyn-error
 
+// The state for the basic player, where are they currently at.
+#[derive(Debug)]
+pub enum PlayerState {
+    MainMenu,
+    Playing,
+    Paused,
+    Dead,
+}
+
+
+// Player struct
+// Very basic player for testing structs
+pub struct Player {
+    pub name: String,
+    // pub position: Vector2D::new(0, 0.0);
+    pub health: i32,
+    pub armor: i32,
+    pub hunger: i32,
+    pub status: PlayerState,
+    // pub ipv4_address: String,
+    // pub ipv6_address: String,
+    pub position: Vector2D<f32>,
+    // pub camera_position: Vector2D<f32>,
+    pub heading: f32
+}
+//
+
 #[derive(Serialize, Deserialize)]
+// Location of the map for the JSON location list.
 pub struct MapLocation {
     // position: Vector2D<f32>,
     name: String,
@@ -52,26 +80,15 @@ pub mod json_handler {
     /// Param 1: Path to the JSON file.
     /// Param 2: The location name to search for in the JSON.
     pub fn print_location(json_path: &str, location_name: &str) -> Result<(), Box<dyn Error>> {
-        // fn print_location(json_path: &str) -> Result<(), Box<dyn std::error::Error>> {
-        // let location = MapLocation {
-        //     pos_x: 200.0,
-        //     pos_y: 200.0,
-        //     pos_z: 200.0,
-        //     heading: 180.0
-        // };
-
         // https://stackoverflow.com/questions/63657897/how-to-read-json-file-with-serde
         let data = fs::read_to_string(json_path).expect("Unable to read file");
         let res: serde_json::Value = serde_json::from_str(&data).expect("Unable to parse json");
 
         // Serialize it to a JSON string
-        let j = serde_json::to_string_pretty(&res)?;
-        // let j = serde_json::to_string(&location)?;
+        // let j = serde_json::to_string_pretty(&res)?;
+        // let j = serde_json::to_string(&res)?;
 
-        // Well this just breaks it.
         // https://jsonic.io/guides/parse-json-rust
-
-        // let location: MapLocation = serde_json::from_value(data["test"]).clone()?;
 
         // let locations: Vec<MapLocation> = serde_json::from_str(&j)?;
         // let locations: Vec<MapLocation> = serde_json::from_str(&j)?;
@@ -80,15 +97,9 @@ pub mod json_handler {
         // }
 
         // This works for reading the location values like this.
-        // TODO Figure out writing to the JSON file also.
         // println!("{}", res["location1"]);
-        // println!("{}", res["location2"]);
 
-        // if(res[location_name].is_string()) {
-        //     println!("{}", res[location_name]);
-        // } else {
-
-        if(res[location_name].is_null())
+        if res[location_name].is_null()
         {
             // println!("Error reading location {}", location_name);
             return Err(Box::new(JsonError("Location was null, or contained no data".into())));
@@ -110,7 +121,7 @@ pub mod json_handler {
     // https://en.perfcode.com/rust/serde/process-files
     // fn write_location(json_path: &str) -> Result<()> {
     pub fn write_locations(json_path: &str) {
-        let data = fs::read_to_string(json_path).expect("Unable to read file");
+        // let data = fs::read_to_string(json_path).expect("Unable to read file");
         // let res: serde_json::Value = serde_json::from_str(&data).expect("Unable to parse json");
 
         let location1 = MapLocation {
