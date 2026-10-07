@@ -1,14 +1,15 @@
 
 // https://doc.rust-lang.org/rust-by-example/hello/print.html
 
-// extern crate test_library
+// extern crate kcnet_lib
 
 // Now this almost works in here.
-// use test_library::{*};
-use test_library::{json_handler::json_handler};
+// use kcnet_lib::{*};
+use kcnet_lib::{json_handler, log_handler::logger, number_generators};
+use kcnet_lib::json_handler::{Player, PlayerState};
 
 use vector2d::Vector2D;
-use rand::RngExt;
+use rand::{rng, RngExt};
 
 // https://docs.rs/base64/latest/base64/
 // use base64::prelude::*;
@@ -28,9 +29,8 @@ use rand::RngExt;
 // use log::{info};
 
 use log::{debug, error, info, trace, warn};
-use log4rs;
+// use log4rs;
 
-use test_library::json_handler::{Player, PlayerState};
 //
 
 use std::{env, fs};
@@ -66,6 +66,8 @@ use log::LevelFilter;
 
 /// This generates a random Vector2D position, mostly just for something random.
 /// TODO How can I make this like a template in C++? So It can return a Vector2D and Vector3D.
+/// `min_range` The minimum range for the coordinates.
+/// `max_range` The maximum range for the coordinates.
 fn generate_random_position(min_range: f32, max_range: f32) -> Vector2D<f32> {
     // println!("Generating random position");
     // https://docs.rs/rand/latest/rand/
@@ -198,6 +200,7 @@ pub fn log_text(text: &str) {
 
 //---------------
 
+/// Basic player test for the Player struct in json_handler.rs.
 fn player_test() {
     let mut rng = rand::rng();
     // Random Vector2D
@@ -219,6 +222,7 @@ fn player_test() {
         position: random_position,
         heading: random_heading
     };
+
     // Print the test values for the player.
     println!("Player status:\n Name: {}\n Health: {}\n\
                 Armor: {}\n Hunger: {}\n Status: {:?}\n\
@@ -229,6 +233,7 @@ fn player_test() {
 }
 
 /// Env testing for environment variables
+/// This will be used in the future.
 fn env_test() {
     // This works, gives an error if the password isn't set.
     // This just crashes the program here.
@@ -253,20 +258,27 @@ fn env_test() {
 // https://tokio.rs/tokio/tutorial/async
 #[tokio::main]
 async fn main() {
-    // println!("Hello, world!");
-
     // Setup the logger
     // env_logger::init();
 
-    // Setup the new Log4s logger
-    log4rs::init_file("logging_config.yaml", Default::default()).unwrap();
+    // The locations file to output and read the list of ReVC game locations from.
+    let locations_json_file = "test.json";
+
+    // Setup the new Log4rs logger
+    // log4rs::init_file("logging_config.yaml", Default::default()).unwrap();
+    // Setup the log file with the library.
+    logger::init("logging_config.yaml");
 
     // These will log to the file and the console.
+    // TODO Move this into log_handler in the library later.
     // trace!("detailed tracing info");
     // debug!("debug info");
     // info!("relevant general info");
     // warn!("warning this program doesn't do much");
     // error!("error message here");
+
+    // Write to the log file with the library.
+    // logger::test();
     //
 
 
@@ -291,26 +303,20 @@ async fn main() {
     // Print a test location from JSON.
     // print_location("test.json").unwrap();
 
-
-
-    // Library testing
-    // TODO Make this work with the test_library create.
-
-    // test_library::public_function();
-
-    // let random_number = test_library::generate_random_number(1, 1000);
+    // Library testing from KCNet-Rust-Lib
+    // let random_number = number_generators::generate_random_number(1, 1000);
     // println!("Random number: {}", random_number);
 
 
-    // json_handler::read_json_file("test.json");
+    // json_handler::read_json_file(locations_json_file);
 
-    // json_handler::print_location("test.json", "Location4").expect("Error reading JSON");
+    // json_handler::print_location(locations_json_file, "Location4").expect("Error reading JSON");
 
     // Write the list of locations to the JSON.
-    json_handler::write_locations("test.json");
+    json_handler::write_locations(locations_json_file);
 
     // Print a test location from JSON.
-    json_handler::print_location("test.json", "Location1").expect("Error reading JSON");
+    json_handler::print_location(locations_json_file, "Location1").expect("Error reading JSON");
 
     // Call a C function in Rust.
     // call_c_test();

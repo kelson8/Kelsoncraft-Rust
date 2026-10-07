@@ -23,9 +23,9 @@ serde_json = "1.0.151"
 tokio = { version = "1.53.2", features = ["rt", "rt-multi-thread", "macros"] }
 
 # https://users.rust-lang.org/t/how-to-use-a-rust-rlib-library-in-a-project/113454/9
-# Requires my test_library package in this Git repo.
+# Requires my kcnet_lib package in this Git repo.
 # I will move things over to this and rename it to kcnet_library_rs later.
-test_library = { path = "../test_library" }
+kcnet_lib = { path = "../kcnet_lib" }
 log = "0.4.34"
 # https://www.pistack.xyz/posts/2026-07-27-rust-logging-libraries-env-logger-log4rs-tracing-slog/
 #env_logger = "0.11.11"

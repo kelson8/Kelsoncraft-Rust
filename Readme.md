@@ -41,8 +41,8 @@ I may add more to this later.
 | cli-test          | Misc cli testing with command argument libraries.                                            |
 | ftlk-test         | A GUI test to play around with.                                                              |
 | gtk-test          | Testing with GTK4, so far this doesn't work                                                  |
-| misc-test         | Main test that is now using the `test_library` crate within this repo.                       |
-| test_library      | Test library that has JSON reading/writing, Vector2D and more for future use.                |
+| kcnet_lib         | Test library that has JSON reading/writing, Vector2D and more for future use.                |
+| misc-test         | Main test that is now using the `kcnet_lib` crate within this repo.                          |
 | raknet-client     | A very basic [Raknet client](https://github.com/b23r0/rust-raknet) copied from the examples. |
 | raknet-server     | A very basic [Raknet server](https://github.com/b23r0/rust-raknet) copied from the examples. |
 | web-requests-test | Testing with web requests and JSON data.                                                     |
