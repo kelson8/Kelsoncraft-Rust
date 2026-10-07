@@ -65,8 +65,11 @@ use log::LevelFilter;
 
 
 /// This generates a random Vector2D position, mostly just for something random.
+///
 /// TODO How can I make this like a template in C++? So It can return a Vector2D and Vector3D.
+///
 /// `min_range` The minimum range for the coordinates.
+///
 /// `max_range` The maximum range for the coordinates.
 fn generate_random_position(min_range: f32, max_range: f32) -> Vector2D<f32> {
     // println!("Generating random position");
@@ -185,7 +188,9 @@ async fn test_async(mut rng: ThreadRng) {
 }
 
 /// Log some text to a file with my custom log format.
+///
 /// TODO Make this get the program name from the cargo crate.
+///
 /// TODO Make this log to a file later, for now it just logs to the console.
 pub fn log_text(text: &str) {
     info!("[Misc-Test]: {}", text);
@@ -193,9 +198,16 @@ pub fn log_text(text: &str) {
     // https://docs.rs/simple-logging/latest/simple_logging/
     // TODO Figure this out for file logging.
     // simple_logging::log_to_file("test.log", LevelFilter::Info).expect("Error logging to file");
+}
 
+/// Test with Vectors
+///
+/// <https://doc.rust-lang.org/book/ch08-01-vectors.html>
+fn vector_test() {
+    // let vector: Vec<i32> = Vec::new();
+    let mut vector = vec![300.0, 180.0, 14.5];
 
-
+    vector.push(200.0);
 }
 
 //---------------
@@ -232,7 +244,8 @@ fn player_test() {
 
 }
 
-/// Env testing for environment variables
+/// Env testing for environment variables.
+///
 /// This will be used in the future.
 fn env_test() {
     // This works, gives an error if the password isn't set.

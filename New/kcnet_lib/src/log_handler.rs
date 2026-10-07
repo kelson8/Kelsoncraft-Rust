@@ -5,6 +5,7 @@ pub mod logger {
     use log::{debug, error, info, trace, warn};
 
     /// Setup the logger
+    ///
     /// `log_config` The logging_config.yaml or log config for Log4rs.
     pub fn init(log_config: &str) {
         // log4rs::init_file("logging_config.yaml", Default::default()).unwrap();
@@ -12,6 +13,7 @@ pub mod logger {
     }
 
     /// Run tests for the logger.
+    ///
     /// So far, just runs all the log functions.
     pub fn test() {
         trace!("detailed tracing info");

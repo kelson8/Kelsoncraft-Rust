@@ -42,6 +42,7 @@ I may add more to this later.
 | ftlk-test         | A GUI test to play around with.                                                              |
 | gtk-test          | Testing with GTK4, so far this doesn't work                                                  |
 | kcnet_lib         | Test library that has JSON reading/writing, Vector2D and more for future use.                |
+| kcnet-slint-test  | Test with the [Slint UI](https://github.com/slint-ui/slint/) for Rust.                       |
 | misc-test         | Main test that is now using the `kcnet_lib` crate within this repo.                          |
 | raknet-client     | A very basic [Raknet client](https://github.com/b23r0/rust-raknet) copied from the examples. |
 | raknet-server     | A very basic [Raknet server](https://github.com/b23r0/rust-raknet) copied from the examples. |

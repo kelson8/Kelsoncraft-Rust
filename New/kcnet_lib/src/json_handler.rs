@@ -24,6 +24,7 @@ pub enum PlayerState {
 }
 
 /// Player struct
+///
 /// Very basic player for testing structs
 pub struct Player {
     pub name: String,
@@ -68,11 +69,13 @@ pub fn read_json_file(path: &str) {
 }
 
 /// Print a test location with JSON.
-/// Now this prints from a JSON file, I need to figure out how to parse it.
-/// And write back into this.
-/// I may build a location reader/writer in Rust for my ReVC Lua scripts.
-/// Moved out of misc-test
+///
+/// Now this prints from a JSON file, I need to figure out how to parse it, and write back into this.
+/// I may build a location reader/writer in Rust for my ReVC Lua scripts, this was moved out of misc-test.
+///
+///
 /// `json_path` Path to the JSON file.
+///
 /// `location_name` The location name to search for in the JSON.
 pub fn print_location(json_path: &str, location_name: &str) -> Result<(), Box<dyn Error>> {
     // https://stackoverflow.com/questions/63657897/how-to-read-json-file-with-serde
@@ -110,9 +113,9 @@ pub fn print_location(json_path: &str, location_name: &str) -> Result<(), Box<dy
     Ok(())
 }
 
-// Test for writing to a JSON file.
-// https://en.perfcode.com/rust/serde/process-files
-// fn write_location(json_path: &str) -> Result<()> {
+/// Test for writing to a JSON file.
+///
+/// <https://en.perfcode.com/rust/serde/process-files>
 pub fn write_locations(json_path: &str) {
     // let data = fs::read_to_string(json_path).expect("Unable to read file");
     // let res: serde_json::Value = serde_json::from_str(&data).expect("Unable to parse json");

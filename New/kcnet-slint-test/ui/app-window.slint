@@ -1,0 +1,78 @@
+import { Button, VerticalBox } from "std-widgets.slint";
+
+// TODO Look into structs and enums later
+// https://docs.slint.dev/latest/docs/slint/guide/language/coding/structs-and-enums/
+//export struct ButtonProperties {
+////    color: blue,
+//    text: string,
+//    posX: float,
+//    posY: float
+//}
+
+// TODO Make this only cover the button that I setup.
+//component ButtonRectangle inherits Text {
+//    Rectangle {
+//        width: 200px;
+//        height: 50px;
+//        background: aliceblue;
+//    }
+//
+//}
+
+/// Test button
+//component MyButton inherits Text {
+//    color: blueviolet;
+//}
+
+export component AppWindow inherits Window {
+    // Set the width and the height
+    width: 200px;
+    height: 200px;
+
+    in-out property <int> counter: 42;
+    callback request-increase-value();
+    VerticalBox {
+        Text {
+            text: "Counter: \{root.counter}";
+        }
+
+        Button {
+            text: "Increase value";
+            clicked => {
+                root.request-increase-value();
+            }
+        }
+    }
+
+//    Button {
+//        text: "Test Button";
+//        x: 50px;
+//        y: 50px;
+//    }
+
+//    ButtonRectangle {
+//        x: 50px;
+//        y: 50px;
+//    }
+
+//    MyButton {
+    Button {
+        text: "Test Button";
+        x: 50px;
+        y: 50px;
+    }
+
+    // This changes the color of the entire screen when clicked and normally.
+//    preferred-height: 100px;
+//    preferred-width: 100px;
+
+//    background: area.pressed ? blue : black;
+//    animate background {
+//        duration: 250ms;
+//    }
+//
+//    area := TouchArea {}
+
+    // TODO Figure out how to use this.
+//    in-out property <ButtonProperties> testButton: { text: "Test", posX: 80, posY: 80 };
+}

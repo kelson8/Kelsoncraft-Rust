@@ -30,3 +30,9 @@ rustc-ice-*.txt
 *.log
 *.bak
 test-bak.json
+
+# Compressed files
+*.zip
+*.7z
+*.tar
+*.tar.gz
