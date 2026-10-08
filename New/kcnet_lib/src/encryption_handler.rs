@@ -2,18 +2,18 @@
 ///
 
 // For AES encryption.
-use encryptman::{encrypt, decrypt, generate_master_key, MasterKey};
+// use encryptman::{encrypt, decrypt, generate_master_key, MasterKey};
+use encryptman::{encrypt, decrypt, generate_master_key};
 
-use aes_gcm::{
-    aead::{Aead, AeadCore, KeyInit, OsRng},
-    Aes256Gcm, Key, Nonce,
-};
+// use aes_gcm::{
+//     aead::{Aead, AeadCore, KeyInit, OsRng},
+//     Aes256Gcm, Key, Nonce,
+// };
 
 // use std::error::Error;
 // use app_error::AppError;
 
-// use argon2::{Argon2, PasswordHasher, password_hash::SaltString};
-use argon2::{Argon2, PasswordHasher};
+// use argon2::{Argon2, PasswordHasher};
 
 
 //-------------

@@ -41,6 +41,10 @@ doc:
 	@echo "Generating Rust Documentation"
 	@cargo doc
 
+fix:
+	@echo "Running cargo fix for fixing warnings."
+	@cargo fix
+
 #install_debug: build_debug
 	@#echo "Installing debug"
 	@#cp target/debug/$(EXEC) $(PREFIX)/bin

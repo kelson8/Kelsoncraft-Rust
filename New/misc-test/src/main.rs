@@ -1,15 +1,14 @@
-
 // https://doc.rust-lang.org/rust-by-example/hello/print.html
 
 // extern crate kcnet_lib
 
 // Now this almost works in here.
 // use kcnet_lib::{*};
-use kcnet_lib::{json_handler, log_handler::logger, number_generators, encryption_handler, hash_util};
+use kcnet_lib::{json_handler, log_handler::logger};
 use kcnet_lib::json_handler::{MapLocation, Player, PlayerState};
 
 use vector2d::Vector2D;
-use rand::{rng, RngExt};
+use rand::RngExt;
 
 // https://docs.rs/base64/latest/base64/
 // use base64::prelude::*;
@@ -28,12 +27,12 @@ use rand::{rng, RngExt};
 // use log::{info, trace, warn};
 // use log::{info};
 
-use log::{debug, error, info, trace, warn};
+use log::info;
 // use log4rs;
 
 //
 
-use std::{env, fs};
+use std::env;
 
 use std::future::Future;
 use std::pin::Pin;
@@ -43,22 +42,15 @@ use rand::rngs::ThreadRng;
 // https://docs.rs/vector2d/latest/vector2d/
 
 // For logging to file
-use log::LevelFilter;
 //
 
 // For AES encryption.
-use encryptman::{encrypt, decrypt, generate_master_key, MasterKey};
 
-use aes_gcm::{
-    aead::{Aead, AeadCore, KeyInit, OsRng},
-    Aes256Gcm, Key, Nonce,
-};
+// use aes_gcm::aead::KeyInit;
 
-use std::error::Error;
 // use app_error::AppError;
 
 // use argon2::{Argon2, PasswordHasher, password_hash::SaltString};
-use argon2::{Argon2, PasswordHasher};
 
 // List of enviornment variables
 // https://doc.rust-lang.org/cargo/reference/environment-variables.html
@@ -91,6 +83,8 @@ const LOG_CONFIG: &'static str = "logging_config.yaml";
 // Try to look into Clap for argument handling.
 // https://github.com/clap-rs/clap
 
+// Supressing the unused function warnings
+// https://stackoverflow.com/questions/32900809/how-to-suppress-function-is-never-used-warning-for-a-function-used-by-tests
 
 /// This generates a random Vector2D position, mostly just for something random.
 ///
@@ -167,6 +161,7 @@ fn verify_password_argon2(password: &u8, password_hash: &str) -> bool {
 
 //------------
 /// Async test
+#[allow(dead_code)]
 struct Delay {
     when: Instant,
 }
@@ -192,6 +187,7 @@ impl Future for Delay {
 
 //--------------------
 
+#[allow(dead_code)]
 async fn test_async(mut rng: ThreadRng) {
     let random_wait_time = rng.random_range(3000..10000);
 
@@ -231,6 +227,7 @@ pub fn log_text(text: &str) {
 /// Test with Vectors
 ///
 /// <https://doc.rust-lang.org/book/ch08-01-vectors.html>
+#[allow(dead_code)]
 fn vector_test() {
     // let vector: Vec<i32> = Vec::new();
     let mut vector = vec![300.0, 180.0, 14.5];
@@ -241,6 +238,7 @@ fn vector_test() {
 //---------------
 
 /// Basic player test for the Player struct in json_handler.rs.
+#[allow(dead_code)]
 fn player_test() {
     let mut rng = rand::rng();
     // Random Vector2D
@@ -275,6 +273,7 @@ fn player_test() {
 /// Env testing for environment variables.
 ///
 /// This will be used in the future.
+#[allow(dead_code)]
 fn env_test() {
     // This works, gives an error if the password isn't set.
     // This just crashes the program here.
@@ -308,7 +307,7 @@ async fn main() {
     println!("--------------------\n");
 
     // The locations file to output and read the list of ReVC game locations from.
-    let locations_json_file = "test.json";
+    let _locations_json_file = "test.json";
 
     // Setup the new Log4rs logger
     // Setup the log file with the library.
