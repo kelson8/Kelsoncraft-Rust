@@ -32,13 +32,13 @@ pub mod logger {
         error!("error message here");
     }
 
-    /// Write a message to the log file.
-    ///
-    /// TODO Why does this give warnings?
-    ///
-    /// I probably won't use this much since I can already easily do it with info!() and the other functions.
-    ///
-    ///
+    // Write a message to the log file.
+    //
+    // TODO Why does this give warnings?
+    //
+    // I probably won't use this much since I can already easily do it with info!() and the other functions.
+    //
+    //
     // pub fn write(status: LogStatus, message: &str) {
     //     match status {
     //         LogStatus::TRACE => trace!("{}", message),
