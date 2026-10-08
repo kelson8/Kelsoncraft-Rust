@@ -1,8 +1,5 @@
 // https://doc.rust-lang.org/rust-by-example/hello/print.html
 
-// extern crate kcnet_lib
-
-// Now this almost works in here.
 // use kcnet_lib::{*};
 use kcnet_lib::{json_handler, log_handler::logger, json_handler::Vec2D, json_handler::Vec3D};
 use kcnet_lib::json_handler::{MapLocation, Player, PlayerState};
@@ -27,13 +24,13 @@ use rand::RngExt;
 // use log::{info, trace, warn};
 // use log::{info};
 
-use log::{debug, info};
+use log::{debug, error, info};
 // use log4rs;
 
 //
 
 use std::env;
-
+use std::error::Error;
 use std::future::Future;
 use std::pin::Pin;
 use std::task::{Context, Poll};
@@ -60,32 +57,6 @@ const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 // The path to the config for Log4rs
 const LOG_CONFIG: &'static str = "logging_config.yaml";
-
-
-// Guide on the question mark operator
-// https://tutorials.dodatech.com/rust-systems/question-mark-operator/
-
-// Rust security hand book
-// https://github.com/yevh/rust-security-handbook
-
-// Someone made a RakNet server in Rust
-// https://github.com/b23r0/rust-raknet
-
-// JSON in rust
-// https://github.com/cloudwego/sonic-rs
-
-// This JSON rust library might be easier to use
-// https://crates.io/crates/serde_json
-
-// List of hashing utilities for Rust
-// https://github.com/RustCrypto/hashes
-//
-
-// Try to look into Clap for argument handling.
-// https://github.com/clap-rs/clap
-
-// Supressing the unused function warnings
-// https://stackoverflow.com/questions/32900809/how-to-suppress-function-is-never-used-warning-for-a-function-used-by-tests
 
 /// This generates a random Vector2D position, mostly just for something random.
 ///
@@ -301,33 +272,29 @@ fn env_test() {
 
 /// Testing actions with a JSON file, mostly reading/ writing to a ReVC locations JSON file. currently.
 /// Moved out of the main function.
-fn json_test(locations_json_file: &str) {
+/// TODO Make this get a list of locations from the CLI or something to write to this with.
+fn json_test(locations_json_file: &str) -> Result<(), Box<dyn Error>> {
 
     // This works in here now!
     // Setup a test location for the JSON file testing.
     let location1 = MapLocation {
         name: "Location1".to_string(),
-        // pos_x: 180.0,
-        // pos_y: 180.0,
-        // pos_z: 14.0,
         pos: Vec3D::new(180.0, 180.0, 14.0),
         heading: 90.0,
     };
 
-    // Parse the location JSON data directly here.
-    // So it is adapted to my format.
-    // TODO Make this get a list of locations from the CLI or something to write to this with.
-    let location_json = json!({
-        // TODO Make it to where I can use the name here also.
-        // For some reason it just complains about the variable being moved.
-        // location1.name:  {
-        "Location1":  {
-            "name": location1.name,
-            "pos_x": location1.pos.x,
-            "pos_y": location1.pos.y,
-            "pos_z": location1.pos.z
-        }
-    });
+    let location2 = MapLocation {
+        name: "Location2".to_string(),
+        pos: Vec3D::new(140.0, 120.0, 12.0),
+        heading: 40.0,
+    };
+
+
+    // Setup the list of map locations here.
+    // TODO Make this be dynamically obtained from how many is in the list in the CLI later.
+    // What I mean is, however many locations are set to be in the list is what this number value should be.
+    // Instead of hard-coding to what I have set above.
+    let mut map_location: [MapLocation; 2] = [location1, location2];
 
     // TODO Add error handling to this.
 
@@ -336,18 +303,21 @@ fn json_test(locations_json_file: &str) {
     // json_handler::print_location(locations_json_file, "Location4").expect("Error reading JSON");
 
     // Write the list of locations to the JSON.
-
     // This should not be used anymore, use write_location instead.
     // json_handler::write_locations(locations_json_file);
 
 
     // This will write a list of locations that I eventually add with the CLI later on.
     json_handler::write_location(locations_json_file,
-                                 // location1);
-                                 location_json);
+                                 &mut map_location)?;
+
+    // TODO Switch to this format later
+    // https://stackoverflow.com/questions/63859927/how-to-get-a-value-from-a-result
 
     // Print a test location from JSON.
     json_handler::print_location(locations_json_file, "Location1").expect("Error reading JSON");
+
+    Ok(())
 }
 
 // I didn't know I could use C in Rust.
@@ -409,7 +379,15 @@ async fn main() {
     //-------
     // JSON Testing
     //-------
-    json_test(locations_json_file);
+    // https://stackoverflow.com/questions/63859927/how-to-get-a-value-from-a-result
+    match  json_test(locations_json_file) {
+        Ok(()) => {
+            println!("Test successful, data written to JSON file!");
+        },
+        Err(e) => {
+            error!("{}", e);
+        }
+    }
 
 
     // #[cfg(feature="debug_test")]

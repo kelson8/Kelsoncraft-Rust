@@ -7,11 +7,11 @@ use argon2::{
 
 /// Hash a password with Argon2
 ///
-/// https://docs.rs/argon2/latest/argon2/
+/// <https://docs.rs/argon2/latest/argon2/>
 ///
 /// Guide used for learning a bit more about the Question mark operator.
 ///
-/// https://stackoverflow.com/questions/42917566/what-is-this-question-mark-operator-about
+/// * <https://stackoverflow.com/questions/42917566/what-is-this-question-mark-operator-about>
 pub fn argon2_hash(password: &str) -> Result<PasswordHash, Error> {
 
     // let password = password;
@@ -37,7 +37,7 @@ pub fn argon2_hash(password: &str) -> Result<PasswordHash, Error> {
 ///
 /// Adapted this from the guide below
 ///
-/// https://mojoauth.com/security-guides/argon2-in-rust#how-to-hash-and-verify-a-password-with-argon2-in-rust
+/// * <https://mojoauth.com/security-guides/argon2-in-rust#how-to-hash-and-verify-a-password-with-argon2-in-rust>
 ///
 /// Example usage:
 ///

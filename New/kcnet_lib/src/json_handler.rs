@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+// use serde::{Deserialize, Serialize};
 // use serde_json::{Result, json};
 // use std::{env, fs};
 
@@ -7,7 +7,7 @@ use std::fmt;
 use vector2d::Vector2D;
 // use vector2d::Vector2D;
 
-use serde_json::json;
+use serde_json::{json, Map, Value};
 use std::fs;
 use std::fs::File;
 use std::io::{BufWriter, Write};
@@ -18,7 +18,7 @@ use std::io::{BufWriter, Write};
 
 // use crate::segment_segment_intersection;
 
-use ::core::f32::consts::PI;
+// use ::core::f32::consts::PI;
 
 // TODO Move these types elsewhere later.
 pub type Vec2D = nalgebra::Vector2<f32>;
@@ -60,11 +60,11 @@ pub struct Player {
 /// Location of the map for the JSON location list.
 pub struct MapLocation {
     // position: Vector2D<f32>,
+    /// The name of the location.
     pub name: String,
-    // pub pos_x: f32,
-    // pub pos_y: f32,
-    // pub pos_z: f32,
+    /// The Vec3D position for the location.
     pub pos: Vec3D,
+    /// The location heading.
     pub heading: f32,
 }
 
@@ -115,6 +115,13 @@ pub fn read_json_file(path: &str) {
 /// `json_path` Path to the JSON file.
 ///
 /// `location_name` The location name to search for in the JSON.
+///
+/// Example usage:
+///
+/// ```rust
+/// json_handler::print_location("test.json", "Location1").expect("Error reading JSON");
+/// ```
+///
 pub fn print_location(json_path: &str, location_name: &str) -> Result<(), Box<dyn Error>> {
     // https://stackoverflow.com/questions/63657897/how-to-read-json-file-with-serde
     let data = fs::read_to_string(json_path).expect("Unable to read file");
@@ -153,10 +160,13 @@ pub fn print_location(json_path: &str, location_name: &str) -> Result<(), Box<dy
 
 /// Test for writing to a JSON file.
 ///
-/// TODO Make this write a list of positions to a JSON file.
 /// Currently, this just hard-codes a few values for testing.
 ///
+/// This function should not be used, use write_location instead
+///
 /// <https://en.perfcode.com/rust/serde/process-files>
+///
+#[deprecated]
 pub fn write_locations(json_path: &str) {
     // let data = fs::read_to_string(json_path).expect("Unable to read file");
     // let res: serde_json::Value = serde_json::from_str(&data).expect("Unable to parse json");
@@ -215,42 +225,63 @@ pub fn write_locations(json_path: &str) {
 
 /// Test for writing data to a JSON file.
 ///
-/// TODO Make this write multiple values at once, so Location1, Location2 and so on.
+/// <https://www.slingacademy.com/article/reading-and-writing-json-files-in-rust-with-serde/>
 ///
-/// Well this needs to be adapted to my write_locations format, I guess I messed something up in here...
+/// New array usage from here
+/// * <https://stackoverflow.com/questions/24831828/how-do-i-pass-an-array-to-a-function-in-rust-and-change-its-content#24833065>
+/// * <https://doc.rust-lang.org/std/primitive.array.html>
 ///
-/// https://www.slingacademy.com/article/reading-and-writing-json-files-in-rust-with-serde/
 ///
 /// Example usage:
 ///
 /// ```rust
-/// use kcnet_lib::json_handler;///
+/// use kcnet_lib::json_handler;
 ///
+/// // Setup a few locations to put into the JSON file.
 /// let location1 = MapLocation {
 ///     name: "Location1".to_string(),
-///     pos_x: 180.0,
-///     pos_y: 180.0,
-///     pos_z: 14.0,
+///     pos: Vec3D::new(180.0, 180.0, 14.0),
 ///     heading: 90.0,
 ///  };
 ///
-///  // Parse the location JSON data directly here.
-///  // So it is adapted to my format.
-///  let location_json = json!({
-///     "Location1":  {
-///     "name": location1.name,
-///     "pos_x": location1.pos_x,
-///     "pos_y": location1.pos_y,
-///     "pos_z": location1.pos_z
-///     }
-///  });
+///  let location2 = MapLocation {
+///     name: "Location2".to_string(),
+///     pos: Vec3D::new(140.0, 120.0, 12.0),
+///    heading: 40.0,
+///  };
 ///
-/// json_handler::write_location("location-file.json", location_json);
+///
+/// // Setup the list of map locations here.
+/// let mut map_location: [MapLocation; 2] = [location1, location2];
+///
+/// // This will write a list of locations that I eventually add with the CLI later on.
+/// json_handler::write_location(locations_json_file,
+///                                  &mut map_location).unwrap();
 /// ```
 ///
-// pub fn write_location(json_path: &str, location: MapLocation) {
-pub fn write_location(json_path: &str, location: serde_json::value::Value) {
-    let json_data = serde_json::to_string_pretty(&location).unwrap();
-    let mut file = File::create(json_path).expect("Unable to create file");
-    file.write_all(&json_data.as_bytes()).expect("Unable to write data");
+// pub fn write_location(json_path: &str, location: serde_json::value::Value) {
+pub fn write_location(json_path: &str, locations: &mut [MapLocation])
+    -> Result<(), Box<dyn Error>> {
+    let mut json_data = Map::new();
+
+    // Write a list of array values to the JSON file.
+    // https://www.reddit.com/r/rust/comments/8k4vwc/rust_noob_using_a_value_from_an_array_as_an_index/
+    for map_loc in locations {
+        json_data.insert(
+            map_loc.name.clone(),
+            json!({
+                "name": map_loc.name,
+                "pos_x": map_loc.pos.x,
+                "pos_y": map_loc.pos.y,
+                "pos_z": map_loc.pos.z,
+                "heading": map_loc.heading,
+            }),
+        );
+    }
+
+    let serialized = serde_json::to_string_pretty(&Value::Object(json_data))?;
+    let mut file = File::create(json_path)?;
+    file.write_all(serialized.as_bytes())?;
+
+    Ok(())
 }
