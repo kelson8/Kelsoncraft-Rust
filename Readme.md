@@ -10,6 +10,22 @@ I have some ESP32 testing in the esp32_test folder which I have now gotten to wo
 I am quite new to rust so a lot of this stuff is based off of the examples
 or some crates that I find to use.
 
+**Misc-Test**
+
+The [misc-test](https://git.kelsoncraft.net/kelson8/Kelsoncraft-Rust/src/branch/master/New/misc-test) project is my new main testing project, I will probably rename it to kcnet_rust or something else later.
+Also, I have a library in this repository named [kcnet_lib](https://git.kelsoncraft.net/kelson8/Kelsoncraft-Rust/src/branch/master/New/kcnet_lib) which that project depends on.
+
+You can encrypt/decrypt your .env file in the `misc-test` project by using the `encrypt-env.sh` and `decrypt-env.sh` files.
+
+These will require the following set in your `.bashrc` or `.zshrc`.
+You will need to put in your Age public key, and a path to the Age private key file.
+This is only ever used for the encrypt and decrypt .env scripts.
+
+* export AGE_PUBLIC_KEY=
+* export AGE_KEY_FILE=
+* export SOPS_AGE_KEY_FILE=$AGE_KEY_FILE
+
+
 **Guide used for ESP32 setup**
 
 I used this guide for setting up the ESP32 testing project
