@@ -5,7 +5,7 @@
 
 // Now this almost works in here.
 // use kcnet_lib::{*};
-use kcnet_lib::{json_handler, log_handler::logger, number_generators};
+use kcnet_lib::{json_handler, log_handler::logger, number_generators, encryption_handler, hash_util};
 use kcnet_lib::json_handler::{Player, PlayerState};
 
 use vector2d::Vector2D;
@@ -46,6 +46,26 @@ use rand::rngs::ThreadRng;
 use log::LevelFilter;
 //
 
+// For AES encryption.
+use encryptman::{encrypt, decrypt, generate_master_key, MasterKey};
+
+use aes_gcm::{
+    aead::{Aead, AeadCore, KeyInit, OsRng},
+    Aes256Gcm, Key, Nonce,
+};
+
+use std::error::Error;
+// use app_error::AppError;
+
+// use argon2::{Argon2, PasswordHasher, password_hash::SaltString};
+use argon2::{Argon2, PasswordHasher};
+
+// List of enviornment variables
+// https://doc.rust-lang.org/cargo/reference/environment-variables.html
+const PROGRAM_NAME: &'static str = env!("CARGO_PKG_NAME");
+const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+
+
 // Guide on the question mark operator
 // https://tutorials.dodatech.com/rust-systems/question-mark-operator/
 
@@ -61,7 +81,12 @@ use log::LevelFilter;
 // This JSON rust library might be easier to use
 // https://crates.io/crates/serde_json
 
+// List of hashing utilities for Rust
+// https://github.com/RustCrypto/hashes
+//
 
+// Try to look into Clap for argument handling.
+// https://github.com/clap-rs/clap
 
 
 /// This generates a random Vector2D position, mostly just for something random.
@@ -274,6 +299,11 @@ async fn main() {
     // Setup the logger
     // env_logger::init();
 
+    // Display the program info message on startup.
+    println!("--------------------");
+    println!("Running {} v{}", PROGRAM_NAME, VERSION);
+    println!("--------------------\n");
+
     // The locations file to output and read the list of ReVC game locations from.
     let locations_json_file = "test.json";
 
@@ -325,7 +355,9 @@ async fn main() {
 
     // json_handler::print_location(locations_json_file, "Location4").expect("Error reading JSON");
 
+    // println!("")
     // Write the list of locations to the JSON.
+    // TODO Add error handling to this.
     json_handler::write_locations(locations_json_file);
 
     // Print a test location from JSON.
@@ -350,5 +382,26 @@ async fn main() {
     // SHA256 and other hashing
     // let test_hashed = sha256_hash_string("test".to_string());
     // println!("Test hashed: {}", test_hashed);
+
+    // AES256 testing
+    // encryption_handler::encryption_test().unwrap();
+
+    //------
+    // Argon2 password hash testing
+    // Some dummy values for testing.
+    // let plain_password = "test123";
+    // let plain_password_hash = "$argon2id$v=19$m=19456,t=2,p=1$QQ5Bz3c5ju11cDDUbTeqYw$1fUHsyc9LrZStzJbULE+cskVUkF6poAcr9Gj/K7ClwQ";
+    //
+    // // let hashed_password = hash_util::argon2_hash(plain_password).unwrap();
+    // // println!("Hashed password: {}", hashed_password);
+    //
+    // let verified_password = hash_util::argon2_hash_verify(plain_password, plain_password_hash).unwrap();
+    // if verified_password {
+    //     println!("Password matches! Logging in.");
+    // } else {
+    //     println!("Password does not match! Cannot login.");
+    // }
+
+    //--------
 
 }
