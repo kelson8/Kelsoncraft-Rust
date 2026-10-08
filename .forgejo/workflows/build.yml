@@ -11,7 +11,8 @@ on:
 #  workflow_dispatch:
 
 jobs:
-  windows-and-linux-build:
+#  windows-and-linux-build:
+  linux-build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -19,12 +20,15 @@ jobs:
         with:
           submodules: recursive
 
+
+      # TODO Fix Windows build later, add this back in.
+      # sudo apt-get install mingw-w64 mingw-w64-common -y
       - name: Update repos and install Rust
         run: |
-          sudo apt-get update && sudo apt-get install curl ca-certificates build-essential pkg-config mingw-w64 mingw-w64-common -y
+          sudo apt-get update && sudo apt-get install curl ca-certificates build-essential pkg-config -y
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
-          rustup target add x86_64-pc-windows-gnu
+#          rustup target add x86_64-pc-windows-gnu
 
       - name: Cache Rust build
         uses: actions/cache@v4
@@ -45,8 +49,8 @@ jobs:
 
       # Well this nearly worked
       # error: error calling dlltool 'x86_64-w64-mingw32-dlltool': No such file or directory (os error 2)
-      - name: Build the kcnet-rust project for Windows
-        run : |
-          cd New/kcnet-rust
-          cargo build --target x86_64-pc-windows-gnu
+#      - name: Build the kcnet-rust project for Windows
+#        run : |
+#          cd New/kcnet-rust
+#          cargo build --target x86_64-pc-windows-gnu
 
