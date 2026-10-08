@@ -2,6 +2,15 @@
 // Moved out of misc-test.
 
 pub mod logger {
+
+    pub enum LogStatus {
+        TRACE,
+        DEBUG,
+        INFO,
+        WARN,
+        ERROR,
+    }
+
     use log::{debug, error, info, trace, warn};
 
     /// Setup the logger
@@ -22,6 +31,29 @@ pub mod logger {
         warn!("warning this program doesn't do much");
         error!("error message here");
     }
+
+    /// Write a message to the log file.
+    ///
+    /// TODO Why does this give warnings?
+    ///
+    /// I probably won't use this much since I can already easily do it with info!() and the other functions.
+    ///
+    ///
+    // pub fn write(status: LogStatus, message: &str) {
+    //     match status {
+    //         LogStatus::TRACE => trace!("{}", message),
+    //         // LogStatus::TRACE => {
+    //         //     trace!("{}", message);
+    //         // }
+    //
+    //         LogStatus::DEBUG => debug!("{}", message),
+    //         LogStatus::INFO => info!("{}", message),
+    //         LogStatus::WARN => warn!("{}", message),
+    //         LogStatus::ERROR => error!("{}", message),
+    //
+    //         _ => println!("Error, invalid log value"),
+    //     }
+    // }
 
 
 

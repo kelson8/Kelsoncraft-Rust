@@ -15,6 +15,9 @@
       <sourceFolder url="file://$MODULE_DIR$/New/kcnet_lib/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/kcnet-slint-test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/ftp-test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/raknet-client/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/raknet-server/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/tcp-server-test/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Dev/target" />
       <excludeFolder url="file://$MODULE_DIR$/src/target" />
       <excludeFolder url="file://$MODULE_DIR$/Esp32-Test/target" />
@@ -28,6 +31,9 @@
       <excludeFolder url="file://$MODULE_DIR$/New/kcnet_lib/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/kcnet-slint-test/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/ftp-test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/raknet-client/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/raknet-server/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/tcp-server-test/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

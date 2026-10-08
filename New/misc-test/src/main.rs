@@ -4,7 +4,7 @@
 
 // Now this almost works in here.
 // use kcnet_lib::{*};
-use kcnet_lib::{json_handler, log_handler::logger};
+use kcnet_lib::{json_handler, log_handler::logger, json_handler::Vec2D, json_handler::Vec3D};
 use kcnet_lib::json_handler::{MapLocation, Player, PlayerState};
 
 use vector2d::Vector2D;
@@ -27,7 +27,7 @@ use rand::RngExt;
 // use log::{info, trace, warn};
 // use log::{info};
 
-use log::info;
+use log::{debug, info};
 // use log4rs;
 
 //
@@ -39,6 +39,7 @@ use std::pin::Pin;
 use std::task::{Context, Poll};
 use std::time::{Duration, Instant};
 use rand::rngs::ThreadRng;
+use serde_json::json;
 // https://docs.rs/vector2d/latest/vector2d/
 
 // For logging to file
@@ -224,6 +225,15 @@ pub fn log_text(text: &str) {
     // simple_logging::log_to_file("test.log", LevelFilter::Info).expect("Error logging to file");
 }
 
+// https://docs.rust-embedded.org/book/c-tips/index.html
+// For feature testing
+#[cfg(feature="debug_test")]
+fn debug_function() {
+    // debug!("");
+    // logger::write(logger::LogStatus::INFO, "Test message");
+    info!("Test message");
+}
+
 /// Test with Vectors
 ///
 /// <https://doc.rust-lang.org/book/ch08-01-vectors.html>
@@ -289,6 +299,57 @@ fn env_test() {
     }
 }
 
+/// Testing actions with a JSON file, mostly reading/ writing to a ReVC locations JSON file. currently.
+/// Moved out of the main function.
+fn json_test(locations_json_file: &str) {
+
+    // This works in here now!
+    // Setup a test location for the JSON file testing.
+    let location1 = MapLocation {
+        name: "Location1".to_string(),
+        // pos_x: 180.0,
+        // pos_y: 180.0,
+        // pos_z: 14.0,
+        pos: Vec3D::new(180.0, 180.0, 14.0),
+        heading: 90.0,
+    };
+
+    // Parse the location JSON data directly here.
+    // So it is adapted to my format.
+    // TODO Make this get a list of locations from the CLI or something to write to this with.
+    let location_json = json!({
+        // TODO Make it to where I can use the name here also.
+        // For some reason it just complains about the variable being moved.
+        // location1.name:  {
+        "Location1":  {
+            "name": location1.name,
+            "pos_x": location1.pos.x,
+            "pos_y": location1.pos.y,
+            "pos_z": location1.pos.z
+        }
+    });
+
+    // TODO Add error handling to this.
+
+    // Reading and printing the JSON file
+    // json_handler::read_json_file(locations_json_file);
+    // json_handler::print_location(locations_json_file, "Location4").expect("Error reading JSON");
+
+    // Write the list of locations to the JSON.
+
+    // This should not be used anymore, use write_location instead.
+    // json_handler::write_locations(locations_json_file);
+
+
+    // This will write a list of locations that I eventually add with the CLI later on.
+    json_handler::write_location(locations_json_file,
+                                 // location1);
+                                 location_json);
+
+    // Print a test location from JSON.
+    json_handler::print_location(locations_json_file, "Location1").expect("Error reading JSON");
+}
+
 // I didn't know I could use C in Rust.
 // https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html#using-extern-functions-to-call-external-code
 // Moved C testing into call-c-test.
@@ -307,7 +368,7 @@ async fn main() {
     println!("--------------------\n");
 
     // The locations file to output and read the list of ReVC game locations from.
-    let _locations_json_file = "test.json";
+    let locations_json_file = "test.json";
 
     // Setup the new Log4rs logger
     // Setup the log file with the library.
@@ -348,34 +409,11 @@ async fn main() {
     //-------
     // JSON Testing
     //-------
+    json_test(locations_json_file);
 
-    // This works in here now!
-    // Setup a test location for the JSON file testing.
-    let location1 = MapLocation {
-        name: "Location1".to_string(),
-        pos_x: 180.0,
-        pos_y: 180.0,
-        pos_z: 14.0,
-        heading: 90.0,
-    };
 
-    // TODO Add error handling to this.
-
-    // Reading and printing the JSON file
-    // json_handler::read_json_file(locations_json_file);
-    // json_handler::print_location(locations_json_file, "Location4").expect("Error reading JSON");
-
-    // Write the list of locations to the JSON.
-
-    // This should not be used anymore, use write_location instead.
-    // json_handler::write_locations(locations_json_file);
-
-    // Print a test location from JSON.
-    // json_handler::print_location(locations_json_file, "Location1").expect("Error reading JSON");
-
-    // This will write a list of locations that I eventually add with the CLI later on.
-    json_handler::write_location("new-test.json",
-                                location1);
+    // #[cfg(feature="debug_test")]
+    // debug_function()
 
     //------
     // Call a C function in Rust.

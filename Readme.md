@@ -75,6 +75,7 @@ I may add more to this later.
 | misc-test         | Main test that is now using the `kcnet_lib` crate within this repo.                                                                                                 |
 | raknet-client     | A very basic [Raknet client](https://github.com/b23r0/rust-raknet) copied from the examples.                                                                        |
 | raknet-server     | A very basic [Raknet server](https://github.com/b23r0/rust-raknet) copied from the examples.                                                                        |
+| tcp-server-test   | This is a very basic TCP Server that I will play around with a bit.                                                                                                 |
 | web-requests-test | Testing with web requests and JSON data.                                                                                                                            |
 
 

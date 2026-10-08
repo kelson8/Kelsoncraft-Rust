@@ -39,3 +39,11 @@ hex = "0.4"
 
 aes-gcm = "0.10"
 #app-error = "0.2.0"
+
+[features]
+# This is somewhat like preprocessors in C++
+# https://doc.rust-lang.org/cargo/reference/features.html
+# The default feature can be used also
+#default = ["debug_test"]
+
+debug_test = []

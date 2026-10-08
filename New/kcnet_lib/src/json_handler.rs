@@ -12,6 +12,19 @@ use std::fs;
 use std::fs::File;
 use std::io::{BufWriter, Write};
 
+// Vector2D and Vector3D
+// https://www.reddit.com/r/rust/comments/1k4pj9s/made_a_library_with_common_3d_operations_that_is/
+// https://crates.io/crates/euclidean
+
+// use crate::segment_segment_intersection;
+
+use ::core::f32::consts::PI;
+
+// TODO Move these types elsewhere later.
+pub type Vec2D = nalgebra::Vector2<f32>;
+pub type Vec3D = nalgebra::Vector3<f32>;
+
+
 // https://stackoverflow.com/questions/51550167/how-to-manually-return-a-result-boxdyn-error
 
 /// The state for the basic player, where are they currently at.
@@ -41,16 +54,41 @@ pub struct Player {
 }
 //
 
-#[derive(Serialize, Deserialize)]
+// Well this breaks the Vec3D setup, I wonder why.
+// TODO Is this needed for anything?
+// #[derive(Serialize, Deserialize)]
 /// Location of the map for the JSON location list.
 pub struct MapLocation {
     // position: Vector2D<f32>,
     pub name: String,
-    pub pos_x: f32,
-    pub pos_y: f32,
-    pub pos_z: f32,
+    // pub pos_x: f32,
+    // pub pos_y: f32,
+    // pub pos_z: f32,
+    pub pos: Vec3D,
     pub heading: f32,
 }
+
+// TODO Figure out how to use this for getters and setters later.
+// https://www.slingacademy.com/article/encapsulation-in-rust-getter-and-setter-methods-for-struct-fields/
+// impl MapLocation {
+//     pub fn name(&self) -> String {
+//         self.name
+//     }
+//
+//     pub fn pos(&self) -> Vec3D {
+//         self.pos
+//     }
+//
+//     pub fn heading(&self) -> f32 {
+//         self.heading
+//     }
+//
+//     pub fn setup_location(&mut self, name: &str, pos: Vec3D, heading: f32) {
+//         self.name = name.to_string();
+//         self.pos = pos;
+//         self.heading = heading;
+//     }
+// }
 
 #[derive(Debug)]
 struct JsonError(String);
@@ -125,17 +163,19 @@ pub fn write_locations(json_path: &str) {
 
     let location1 = MapLocation {
         name: "Location1".to_string(),
-        pos_x: 180.0,
-        pos_y: 180.0,
-        pos_z: 14.0,
+        pos: Vec3D::new(180.0, 180.0, 14.0),
+        // pos_x: 180.0,
+        // pos_y: 180.0,
+        // pos_z: 14.0,
         heading: 90.0,
     };
 
     let location2 = MapLocation {
         name: "Location2".to_string(),
-        pos_x: 140.2,
-        pos_y: 150.3,
-        pos_z: 14.5,
+        pos: Vec3D::new(140.2, 150.3, 14.5),
+        // pos_x: 140.2,
+        // pos_y: 150.3,
+        // pos_z: 14.5,
         heading: 40.0,
     };
 
@@ -145,9 +185,9 @@ pub fn write_locations(json_path: &str) {
     let location_json = json!({
         "Location1":  {
             "name": location1.name,
-            "pos_x": location1.pos_x,
-            "pos_y": location1.pos_y,
-            "pos_z": location1.pos_z,
+            "pos_x": location1.pos.x,
+            "pos_y": location1.pos.y,
+            "pos_z": location1.pos.z,
         },
 
         // https://stackoverflow.com/questions/28655362/how-does-one-round-a-floating-point-number-to-a-specified-number-of-digits#28656825
@@ -157,9 +197,9 @@ pub fn write_locations(json_path: &str) {
             "name": location2.name,
             // Well now these get converted to a string in the JSON output.
             // This did something but now they don't have the values stripped from it anymore.
-            "pos_x": format!("{:.3}", location2.pos_x).parse::<f32>().unwrap(),
-            "pos_y": format!("{:.2}", location2.pos_y).parse::<f32>().unwrap(),
-            "pos_z": format!("{:.2}", location2.pos_z).parse::<f32>().unwrap(),
+            "pos_x": format!("{:.3}", location2.pos.x).parse::<f32>().unwrap(),
+            "pos_y": format!("{:.2}", location2.pos.y).parse::<f32>().unwrap(),
+            "pos_z": format!("{:.2}", location2.pos.z).parse::<f32>().unwrap(),
         }
     });
 
@@ -177,6 +217,8 @@ pub fn write_locations(json_path: &str) {
 ///
 /// TODO Make this write multiple values at once, so Location1, Location2 and so on.
 ///
+/// Well this needs to be adapted to my write_locations format, I guess I messed something up in here...
+///
 /// https://www.slingacademy.com/article/reading-and-writing-json-files-in-rust-with-serde/
 ///
 /// Example usage:
@@ -192,10 +234,22 @@ pub fn write_locations(json_path: &str) {
 ///     heading: 90.0,
 ///  };
 ///
-/// json_handler::write_location("location-file.json", location1);
+///  // Parse the location JSON data directly here.
+///  // So it is adapted to my format.
+///  let location_json = json!({
+///     "Location1":  {
+///     "name": location1.name,
+///     "pos_x": location1.pos_x,
+///     "pos_y": location1.pos_y,
+///     "pos_z": location1.pos_z
+///     }
+///  });
+///
+/// json_handler::write_location("location-file.json", location_json);
 /// ```
 ///
-pub fn write_location(json_path: &str, location: MapLocation) {
+// pub fn write_location(json_path: &str, location: MapLocation) {
+pub fn write_location(json_path: &str, location: serde_json::value::Value) {
     let json_data = serde_json::to_string_pretty(&location).unwrap();
     let mut file = File::create(json_path).expect("Unable to create file");
     file.write_all(&json_data.as_bytes()).expect("Unable to write data");
