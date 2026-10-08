@@ -6,7 +6,7 @@
 // Now this almost works in here.
 // use kcnet_lib::{*};
 use kcnet_lib::{json_handler, log_handler::logger, number_generators, encryption_handler, hash_util};
-use kcnet_lib::json_handler::{Player, PlayerState};
+use kcnet_lib::json_handler::{MapLocation, Player, PlayerState};
 
 use vector2d::Vector2D;
 use rand::{rng, RngExt};
@@ -64,6 +64,9 @@ use argon2::{Argon2, PasswordHasher};
 // https://doc.rust-lang.org/cargo/reference/environment-variables.html
 const PROGRAM_NAME: &'static str = env!("CARGO_PKG_NAME");
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+
+// The path to the config for Log4rs
+const LOG_CONFIG: &'static str = "logging_config.yaml";
 
 
 // Guide on the question mark operator
@@ -308,30 +311,22 @@ async fn main() {
     let locations_json_file = "test.json";
 
     // Setup the new Log4rs logger
-    // log4rs::init_file("logging_config.yaml", Default::default()).unwrap();
     // Setup the log file with the library.
-    logger::init("logging_config.yaml");
-
-    // These will log to the file and the console.
-    // TODO Move this into log_handler in the library later.
-    // trace!("detailed tracing info");
-    // debug!("debug info");
-    // info!("relevant general info");
-    // warn!("warning this program doesn't do much");
-    // error!("error message here");
+    logger::init(LOG_CONFIG);
 
     // Write to the log file with the library.
     // logger::test();
     //
-
 
     // Load the .env file for later use
     // There is a .env.example file in here which can be renamed to .env and used.
     // https://env.dev/guides/rust-env-variables
     dotenvy::dotenv().ok();
 
+    // info!(".env loaded");
+
     // let number_to_convert = 400;
-    let mut rng = rand::rng();
+    // let mut rng = rand::rng();
 
     // Display the working directory
     // https://doc.rust-lang.org/std/env/fn.current_dir.html
@@ -351,18 +346,39 @@ async fn main() {
     // println!("Random number: {}", random_number);
 
 
-    // json_handler::read_json_file(locations_json_file);
+    //-------
+    // JSON Testing
+    //-------
 
+    // This works in here now!
+    // Setup a test location for the JSON file testing.
+    let location1 = MapLocation {
+        name: "Location1".to_string(),
+        pos_x: 180.0,
+        pos_y: 180.0,
+        pos_z: 14.0,
+        heading: 90.0,
+    };
+
+    // TODO Add error handling to this.
+
+    // Reading and printing the JSON file
+    // json_handler::read_json_file(locations_json_file);
     // json_handler::print_location(locations_json_file, "Location4").expect("Error reading JSON");
 
-    // println!("")
     // Write the list of locations to the JSON.
-    // TODO Add error handling to this.
-    json_handler::write_locations(locations_json_file);
+
+    // This should not be used anymore, use write_location instead.
+    // json_handler::write_locations(locations_json_file);
 
     // Print a test location from JSON.
-    json_handler::print_location(locations_json_file, "Location1").expect("Error reading JSON");
+    // json_handler::print_location(locations_json_file, "Location1").expect("Error reading JSON");
 
+    // This will write a list of locations that I eventually add with the CLI later on.
+    json_handler::write_location("new-test.json",
+                                location1);
+
+    //------
     // Call a C function in Rust.
     // call_c_test();
 

@@ -10,7 +10,7 @@ use vector2d::Vector2D;
 use serde_json::json;
 use std::fs;
 use std::fs::File;
-use std::io::BufWriter;
+use std::io::{BufWriter, Write};
 
 // https://stackoverflow.com/questions/51550167/how-to-manually-return-a-result-boxdyn-error
 
@@ -45,11 +45,11 @@ pub struct Player {
 /// Location of the map for the JSON location list.
 pub struct MapLocation {
     // position: Vector2D<f32>,
-    name: String,
-    pos_x: f32,
-    pos_y: f32,
-    pos_z: f32,
-    heading: f32,
+    pub name: String,
+    pub pos_x: f32,
+    pub pos_y: f32,
+    pub pos_z: f32,
+    pub heading: f32,
 }
 
 #[derive(Debug)]
@@ -115,6 +115,9 @@ pub fn print_location(json_path: &str, location_name: &str) -> Result<(), Box<dy
 
 /// Test for writing to a JSON file.
 ///
+/// TODO Make this write a list of positions to a JSON file.
+/// Currently, this just hard-codes a few values for testing.
+///
 /// <https://en.perfcode.com/rust/serde/process-files>
 pub fn write_locations(json_path: &str) {
     // let data = fs::read_to_string(json_path).expect("Unable to read file");
@@ -168,4 +171,32 @@ pub fn write_locations(json_path: &str) {
     serde_json::to_writer_pretty(writer, &location_json).unwrap();
 
     // Ok(())
+}
+
+/// Test for writing data to a JSON file.
+///
+/// TODO Make this write multiple values at once, so Location1, Location2 and so on.
+///
+/// https://www.slingacademy.com/article/reading-and-writing-json-files-in-rust-with-serde/
+///
+/// Example usage:
+///
+/// ```rust
+/// use kcnet_lib::json_handler;///
+///
+/// let location1 = MapLocation {
+///     name: "Location1".to_string(),
+///     pos_x: 180.0,
+///     pos_y: 180.0,
+///     pos_z: 14.0,
+///     heading: 90.0,
+///  };
+///
+/// json_handler::write_location("location-file.json", location1);
+/// ```
+///
+pub fn write_location(json_path: &str, location: MapLocation) {
+    let json_data = serde_json::to_string_pretty(&location).unwrap();
+    let mut file = File::create(json_path).expect("Unable to create file");
+    file.write_all(&json_data.as_bytes()).expect("Unable to write data");
 }

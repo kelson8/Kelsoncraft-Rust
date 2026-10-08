@@ -4,17 +4,22 @@
 # This works well for logging to the console and to a log file!
 # TODO Make this clear out the old log file while I am testing.
 
+# I changed this to local time format instead of utc.
+# So I can more easily tell what time these logs were made.
+
 appenders:
   my_stdout:
     kind: console
     encoder:
-      pattern: "{h({d(%Y-%m-%d %H:%M:%S)(utc)} - {l}: {m}{n})}"
+#      pattern: "{h({d(%Y-%m-%d %H:%M:%S)(utc)} - {l}: {m}{n})}"
+      pattern: "{h({d(%Y-%m-%d %H:%M:%S)(local)} - {l}: {m}{n})}"
   my_file_logger:
 #    kind: file
     kind: rolling_file
     path: "log/my.log"
     encoder:
-      pattern: "{d(%Y-%m-%d %H:%M:%S)(utc)} - {h({l})}: {m}{n}"
+#      pattern: "{d(%Y-%m-%d %H:%M:%S)(utc)} - {h({l})}: {m}{n}"
+      pattern: "{d(%Y-%m-%d %H:%M:%S)(local)} - {h({l})}: {m}{n}"
 
     policy:
       trigger:
