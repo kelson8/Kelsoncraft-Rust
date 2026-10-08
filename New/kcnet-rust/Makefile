@@ -1,6 +1,6 @@
 VERSION=1.0
-NAME=misc-test
-EXEC=misc-test
+NAME=kcnet-rust
+EXEC=kcnet-rust
 PREFIX=$(HOME)/.local
 
 #default: build_release

@@ -1,5 +1,5 @@
 [package]
-name = "misc-test"
+name = "kcnet-rust"
 version = "0.1.0"
 edition = "2024"
 description = "KCNet Misc testing with Rust"

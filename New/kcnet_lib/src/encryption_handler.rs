@@ -17,7 +17,7 @@ use encryptman::{encrypt, decrypt, generate_master_key};
 
 
 //-------------
-// Taken out of misc-test.
+// Taken out of kcnet-rust.
 //-------------
 
 /// Generate a random encryption key and return the hex encoded value of it.

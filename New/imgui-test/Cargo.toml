@@ -1,0 +1,12 @@
+[package]
+name = "imgui-test"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[dependencies]
+dear-app = "0.18.0"
+#dear-imgui-rs = "0.18"
+## Choose a backend + platform integration
+#dear-imgui-wgpu = "0.18"  # or dear-imgui-glow / dear-imgui-ash
+#dear-imgui-winit = "0.18" # or dear-imgui-sdl3

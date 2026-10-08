@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/New/web-requests-test/target/debug/build/btls-sys-064ed28b423847cb/out/boringssl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/New/web-requests-test/target/debug/build/btls-sys-3d98c3530cbf8383/out/boringssl" vcs="Git" />
   </component>
 </project>

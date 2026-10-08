@@ -679,6 +679,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "kcnet-rust"
+version = "0.1.0"
+dependencies = [
+ "aes-gcm 0.10.3",
+ "argon2",
+ "base64",
+ "digest 0.11.3",
+ "dotenvy",
+ "encryptman",
+ "hex",
+ "kcnet_lib",
+ "log",
+ "log4rs",
+ "password-hash",
+ "rand 0.10.3",
+ "serde",
+ "serde_json",
+ "sha256",
+ "tokio",
+ "vector2d",
+]
+
+[[package]]
 name = "kcnet_lib"
 version = "0.1.0"
 dependencies = [
@@ -788,29 +811,6 @@ name = "memchr"
 version = "2.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf8baf1c55e62ffcace7a9f06f4bd9cd3f0c4beb022d3b367256b91b87513d98"
-
-[[package]]
-name = "misc-test"
-version = "0.1.0"
-dependencies = [
- "aes-gcm 0.10.3",
- "argon2",
- "base64",
- "digest 0.11.3",
- "dotenvy",
- "encryptman",
- "hex",
- "kcnet_lib",
- "log",
- "log4rs",
- "password-hash",
- "rand 0.10.3",
- "serde",
- "serde_json",
- "sha256",
- "tokio",
- "vector2d",
-]
 
 [[package]]
 name = "mock_instant"

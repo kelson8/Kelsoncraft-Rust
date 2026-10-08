@@ -21,7 +21,7 @@
 // This method is even better and easier to use.
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
-// Taken from misc-test
+// Taken from kcnet-rust
 
 // unsafe extern "C" {
 //     fn abs(input: i32) -> i32;

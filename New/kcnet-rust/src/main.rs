@@ -218,7 +218,7 @@ async fn test_async(mut rng: ThreadRng) {
 ///
 /// TODO Make this log to a file later, for now it just logs to the console.
 pub fn log_text(text: &str) {
-    info!("[Misc-Test]: {}", text);
+    info!("[KCNet-Rust]: {}", text);
 
     // https://docs.rs/simple-logging/latest/simple_logging/
     // TODO Figure this out for file logging.

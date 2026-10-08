@@ -109,7 +109,7 @@ pub fn read_json_file(path: &str) {
 /// Print a test location with JSON.
 ///
 /// Now this prints from a JSON file, I need to figure out how to parse it, and write back into this.
-/// I may build a location reader/writer in Rust for my ReVC Lua scripts, this was moved out of misc-test.
+/// I may build a location reader/writer in Rust for my ReVC Lua scripts, this was moved out of kcnet-rust.
 ///
 ///
 /// `json_path` Path to the JSON file.

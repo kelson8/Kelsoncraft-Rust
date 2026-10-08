@@ -10,7 +10,6 @@
       <sourceFolder url="file://$MODULE_DIR$/New/cli-test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/ftlk-test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/gtk-test/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/New/misc-test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/call-c-test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/kcnet_lib/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/kcnet-slint-test/src" isTestSource="false" />
@@ -18,6 +17,8 @@
       <sourceFolder url="file://$MODULE_DIR$/New/raknet-client/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/raknet-server/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/tcp-server-test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/imgui-test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/kcnet-rust/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Dev/target" />
       <excludeFolder url="file://$MODULE_DIR$/src/target" />
       <excludeFolder url="file://$MODULE_DIR$/Esp32-Test/target" />
@@ -26,7 +27,6 @@
       <excludeFolder url="file://$MODULE_DIR$/New/cli-test/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/ftlk-test/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/gtk-test/target" />
-      <excludeFolder url="file://$MODULE_DIR$/New/misc-test/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/call-c-test/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/kcnet_lib/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/kcnet-slint-test/target" />
@@ -34,6 +34,8 @@
       <excludeFolder url="file://$MODULE_DIR$/New/raknet-client/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/raknet-server/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/tcp-server-test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/imgui-test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/kcnet-rust/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -1,5 +1,5 @@
 // Setup the new Log4rs logger
-// Moved out of misc-test.
+// Moved out of kcnet-rust.
 
 pub mod logger {
 

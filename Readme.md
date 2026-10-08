@@ -2,7 +2,7 @@
 
 ### Build status
 
-**This build.yml is only for the misc-test project currently.**
+**This build.yml is only for the kcnet-rust project currently.**
 
 <img src="https://git.kelsoncraft.net/kelson8/Kelsoncraft-Rust/badges/workflows/build.yml/badge.svg">
 
@@ -15,19 +15,19 @@
 This is a list of random and misc projects that I am working on with rust,
 some of these came from the Rust documentation or other packages.
 
-The Dev folder contains some of my older dev testing, I have since switched to the `misc-test` Rust project in the `New` folder.
+The Dev folder contains some of my older dev testing, I have since switched to the `kcnet-rust` Rust project in the `New` folder.
 
 I have some ESP32 testing in the esp32_test folder which I have now gotten to work by blinking an LED.
 
 I am quite new to rust so a lot of this stuff is based off of the examples
 or some crates that I find to use.
 
-**Misc-Test**
+**KCNet-Rust**
 
-The [misc-test](https://git.kelsoncraft.net/kelson8/Kelsoncraft-Rust/src/branch/master/New/misc-test) project is my new main testing project, I will probably rename it to kcnet_rust or something else later.
+The [KCNet-Rust](https://git.kelsoncraft.net/kelson8/Kelsoncraft-Rust/src/branch/master/New/kcnet-rust) project is my new main testing project, I will probably rename it to kcnet_rust or something else later.
 Also, I have a library in this repository named [kcnet_lib](https://git.kelsoncraft.net/kelson8/Kelsoncraft-Rust/src/branch/master/New/kcnet_lib) which that project depends on.
 
-You can encrypt/decrypt your .env file in the `misc-test` project by using the `encrypt-env.sh` and `decrypt-env.sh` files.
+You can encrypt/decrypt your .env file in the `KCNet-Rust` project by using the `encrypt-env.sh` and `decrypt-env.sh` files.
 
 These will require the following set in your `.bashrc` or `.zshrc`.
 You will need to put in your Age public key, and a path to the Age private key file.
@@ -70,9 +70,10 @@ I may add more to this later.
 | ftlk-test         | A GUI test to play around with.                                                                                                                                     |
 | ftp-test          | A very basic FTP test with no login and no SSL, using [libunftp](https://github.com/bolcom/libunftp) and [unftp-sbe-fs](https://github.com/rmokerone/unftp-sbe-fs). |
 | gtk-test          | Testing with GTK4, so far this doesn't work                                                                                                                         |
+| imgui-test        | Testing with ImGui and Rust.                                                                                                                                        |
 | kcnet_lib         | Test library that has JSON reading/writing, Vector2D and more for future use.                                                                                       |
 | kcnet-slint-test  | Test with the [Slint UI](https://github.com/slint-ui/slint/) for Rust.                                                                                              |
-| misc-test         | Main test that is now using the `kcnet_lib` crate within this repo.                                                                                                 |
+| kcnet-rust        | Main test that is now using the `kcnet_lib` crate within this repo.                                                                                                 |
 | raknet-client     | A very basic [Raknet client](https://github.com/b23r0/rust-raknet) copied from the examples.                                                                        |
 | raknet-server     | A very basic [Raknet server](https://github.com/b23r0/rust-raknet) copied from the examples.                                                                        |
 | tcp-server-test   | This is a very basic TCP Server that I will play around with a bit.                                                                                                 |

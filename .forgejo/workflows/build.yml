@@ -25,9 +25,8 @@ jobs:
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           source "$HOME/.cargo/env"
 
-      # TODO Figure out the path for this.
-      - name: Build the misc-test Rust project
+      - name: Build the kcnet-rust Rust project
         run: |
           source "$HOME/.cargo/env"
-          cd New/misc-test && cargo build
+          cd New/kcnet-rust && cargo build
 
