@@ -23,7 +23,11 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install curl ca-certificates build-essential pkg-config
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+      - name: Set up Rust environment
+        run: |
           source "$HOME/.cargo/env"
+          echo "PATH=$PATH" >> "GIT_ENV"
 
       - name: Setup Windows cross compiler for Rust
         run : rustup target add x86_64-pc-windows-gnu
