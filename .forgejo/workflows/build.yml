@@ -25,8 +25,16 @@ jobs:
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           source "$HOME/.cargo/env"
 
-      - name: Build the kcnet-rust Rust project
+      - name: Setup Windows cross compiler for Rust
+        run : rustup target add x86_64-pc-windows-gnu
+
+      - name: Build the kcnet-rust project for Linux
         run: |
-          source "$HOME/.cargo/env"
-          cd New/kcnet-rust && cargo build
+          cd New/kcnet-rust
+          cargo build
+
+      - name: Build the kcnet-rust project for Windows
+        run : |
+          cd New/kcnet-rust
+          cargo build --target x86_64-pc-windows-gnu
 
