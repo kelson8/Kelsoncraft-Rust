@@ -5,6 +5,15 @@ use argon2::{
     Argon2
 };
 
+// https://docs.rs/sha256/latest/sha256/
+use sha256::{digest, try_digest};
+
+use md5;
+
+//--------------
+// Argon2
+//--------------
+
 /// Hash a password with Argon2
 ///
 /// <https://docs.rs/argon2/latest/argon2/>
@@ -64,4 +73,25 @@ pub fn argon2_hash_verify(password: &str, hashed_password: &str) -> Result<bool,
     let verify_password = argon2.verify_password(password.as_ref(), hashed_password).is_ok();
 
     Ok(verify_password)
+}
+
+//--------------
+// String hashing
+//--------------
+
+/// Hash a string with MD5.
+///
+/// This has not been tested.
+///
+/// * <https://stackoverflow.com/questions/65036641/md5-hash-in-rust>
+pub fn hash_md5(string_to_hash: String) -> md5::Digest {
+    let md5_hash = md5::compute(string_to_hash);
+    md5_hash
+}
+
+/// Hash a string with SHA256.
+pub fn sha256_hash_string(string_to_hash: String) -> String {
+    let input = String::from(&string_to_hash);
+    let val = digest(input);
+    val
 }

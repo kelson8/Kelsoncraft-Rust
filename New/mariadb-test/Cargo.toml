@@ -1,0 +1,8 @@
+[package]
+name = "mariadb-test"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+mysql = { version = "28.0.3", features = ["client_ed25519"] }
+dotenvy = "0.15"

@@ -19,6 +19,8 @@
       <sourceFolder url="file://$MODULE_DIR$/New/tcp-server-test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/imgui-test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/New/kcnet-rust/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/thread-test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/New/mariadb-test/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Dev/target" />
       <excludeFolder url="file://$MODULE_DIR$/src/target" />
       <excludeFolder url="file://$MODULE_DIR$/Esp32-Test/target" />
@@ -36,6 +38,8 @@
       <excludeFolder url="file://$MODULE_DIR$/New/tcp-server-test/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/imgui-test/target" />
       <excludeFolder url="file://$MODULE_DIR$/New/kcnet-rust/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/thread-test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/New/mariadb-test/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

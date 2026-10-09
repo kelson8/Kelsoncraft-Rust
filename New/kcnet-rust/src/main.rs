@@ -1,8 +1,10 @@
 // https://doc.rust-lang.org/rust-by-example/hello/print.html
 
+use std::collections::HashMap;
 // use kcnet_lib::{*};
 use kcnet_lib::{json_handler, log_handler::logger, json_handler::Vec2D, json_handler::Vec3D};
 use kcnet_lib::json_handler::{MapLocation, Player, PlayerState};
+use kcnet_lib::hash_util;
 
 use vector2d::Vector2D;
 use rand::RngExt;
@@ -10,8 +12,7 @@ use rand::RngExt;
 // https://docs.rs/base64/latest/base64/
 // use base64::prelude::*;
 
-// https://docs.rs/sha256/latest/sha256/
-// use sha256::{digest, try_digest};
+
 
 // https://docs.rs/argon2/latest/argon2/
 // use argon2::{
@@ -65,6 +66,7 @@ const LOG_CONFIG: &'static str = "logging_config.yaml";
 /// `min_range` The minimum range for the coordinates.
 ///
 /// `max_range` The maximum range for the coordinates.
+// fn generate_random_position(min_range: f32, max_range: f32) -> Vec3D {
 fn generate_random_position(min_range: f32, max_range: f32) -> Vector2D<f32> {
     // println!("Generating random position");
     // https://docs.rs/rand/latest/rand/
@@ -80,14 +82,8 @@ fn generate_random_position(min_range: f32, max_range: f32) -> Vector2D<f32> {
     // println!("Random number: {random_number}");
 
     Vector2D::new(random_pos1, random_pos2)
+    // Vec3D::new(random_pos1)
 }
-
-/// Hash a string with SHA256.
-// fn sha256_hash_string(string_to_hash: String) -> String {
-//     let input = String::from(&string_to_hash);
-//     let val = digest(input);
-//     val
-// }
 
 // Well I need to learn more error handling in Rust before I move on with it.
 
@@ -320,6 +316,16 @@ fn json_test(locations_json_file: &str) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+/// Testing with hash maps.
+///
+/// * <https://doc.rust-lang.org/book/ch08-03-hash-maps.html>
+fn hash_map_test() -> HashMap<String, i32> {
+    let mut scores: HashMap<String, i32> = HashMap::new();
+
+    scores.insert(String::from("Player1"), 1000);
+    scores
+}
+
 // I didn't know I could use C in Rust.
 // https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html#using-extern-functions-to-call-external-code
 // Moved C testing into call-c-test.
@@ -380,14 +386,14 @@ async fn main() {
     // JSON Testing
     //-------
     // https://stackoverflow.com/questions/63859927/how-to-get-a-value-from-a-result
-    match  json_test(locations_json_file) {
-        Ok(()) => {
-            println!("Test successful, data written to JSON file!");
-        },
-        Err(e) => {
-            error!("{}", e);
-        }
-    }
+    // match  json_test(locations_json_file) {
+    //     Ok(()) => {
+    //         println!("Test successful, data written to JSON file!");
+    //     },
+    //     Err(e) => {
+    //         error!("{}", e);
+    //     }
+    // }
 
 
     // #[cfg(feature="debug_test")]
@@ -411,7 +417,7 @@ async fn main() {
     // test_async(rng).await;
 
     // SHA256 and other hashing
-    // let test_hashed = sha256_hash_string("test".to_string());
+    // let test_hashed = hash_util::sha256_hash_string("test".to_string());
     // println!("Test hashed: {}", test_hashed);
 
     // AES256 testing
@@ -432,6 +438,10 @@ async fn main() {
     // } else {
     //     println!("Password does not match! Cannot login.");
     // }
+
+    let hash_test = hash_map_test();
+    // println!("Hash map test: {}", hash_test.get("Player12").unwrap());
+    println!("Hash map test: {}", hash_test.get("Player1").expect("Hash Map Test: Value doesn't exist or was blank."));
 
     //--------
 
