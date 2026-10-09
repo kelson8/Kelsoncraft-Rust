@@ -1,5 +1,7 @@
 // https://doc.rust-lang.org/rust-by-example/hello/print.html
 
+mod ssh_handler;
+
 use std::collections::HashMap;
 // use kcnet_lib::{*};
 use kcnet_lib::{json_handler, log_handler::logger, json_handler::Vec2D, json_handler::Vec3D};
@@ -50,6 +52,9 @@ use serde_json::json;
 // use app_error::AppError;
 
 // use argon2::{Argon2, PasswordHasher, password_hash::SaltString};
+
+use openssh::{Session, KnownHosts};
+use crate::ssh_handler::LinuxCommand;
 
 // List of enviornment variables
 // https://doc.rust-lang.org/cargo/reference/environment-variables.html
@@ -326,6 +331,7 @@ fn hash_map_test() -> HashMap<String, i32> {
     scores
 }
 
+
 // I didn't know I could use C in Rust.
 // https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html#using-extern-functions-to-call-external-code
 // Moved C testing into call-c-test.
@@ -358,6 +364,9 @@ async fn main() {
     // There is a .env.example file in here which can be renamed to .env and used.
     // https://env.dev/guides/rust-env-variables
     dotenvy::dotenv().ok();
+
+    let ssh_username = env::var("SSH_USERNAME").unwrap_or_default();
+    let ssh_host = env::var("SSH_HOST").unwrap_or_default();
 
     // info!(".env loaded");
 
@@ -444,5 +453,11 @@ async fn main() {
     println!("Hash map test: {}", hash_test.get("Player1").expect("Hash Map Test: Value doesn't exist or was blank."));
 
     //--------
+
+    //--------
+    // SSH Test
+    // This can send a command to an SSH server for testing.
+    ssh_handler::ssh_test(&ssh_username, &ssh_host, LinuxCommand::LS).await.expect("SSH testing failed.");
+    //
 
 }

@@ -38,6 +38,7 @@ encryptman = "0.4.0"
 hex = "0.4"
 
 aes-gcm = "0.10"
+openssh = { version = "0.11.6", features = ["native-mux"] }
 #app-error = "0.2.0"
 
 [features]

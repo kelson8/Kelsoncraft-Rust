@@ -4,5 +4,9 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-mysql = { version = "28.0.3", features = ["client_ed25519"] }
+#mysql = { version = "28.0.3", features = ["client_ed25519"] }
 dotenvy = "0.15"
+tokio = { version = "1.53.2", features = ["rt", "rt-multi-thread", "macros"] }
+
+sqlx = {version = "0.7", default-features = false, features = ["runtime-async-std", "macros", "mysql", "time", "chrono", "uuid"]}
+async-std = "1.13.2"
