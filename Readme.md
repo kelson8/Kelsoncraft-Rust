@@ -74,9 +74,11 @@ I may add more to this later.
 | kcnet_lib         | Test library that has JSON reading/writing, Vector2D and more for future use.                                                                                       |
 | kcnet-slint-test  | Test with the [Slint UI](https://github.com/slint-ui/slint/) for Rust.                                                                                              |
 | kcnet-rust        | Main test that is now using the `kcnet_lib` crate within this repo.                                                                                                 |
+ | mariadb-test      | Testing with MariaDB which will be used for database stuff that I mess around with.                                                                                 |
 | raknet-client     | A very basic [Raknet client](https://github.com/b23r0/rust-raknet) copied from the examples.                                                                        |
 | raknet-server     | A very basic [Raknet server](https://github.com/b23r0/rust-raknet) copied from the examples.                                                                        |
 | tcp-server-test   | This is a very basic TCP Server that I will play around with a bit.                                                                                                 |
+ | thread-test       | Testing with multiple threads, this doesn't do anything so far.                                                                                                     |
 | web-requests-test | Testing with web requests and JSON data.                                                                                                                            |
 
 
