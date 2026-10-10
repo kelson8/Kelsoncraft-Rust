@@ -5,3 +5,11 @@ edition = "2024"
 
 [dependencies]
 clap = { version = "4.6.7", features = ["derive"] }
+
+# https://users.rust-lang.org/t/how-to-use-a-rust-rlib-library-in-a-project/113454/9
+# Requires my kcnet_lib package in this Git repo.
+kcnet_lib = { path = "../kcnet_lib" }
+ansi_term = "0.12.1"
+git2 = { version = "0.21.0", features=["https"] }
+reqwest = { version = "0.13.5", features = ["blocking", "json", "query"] }
+serde = { version = "1.0.229", features = ["derive"] }

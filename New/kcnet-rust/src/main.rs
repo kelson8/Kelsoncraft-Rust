@@ -4,7 +4,7 @@ mod ssh_handler;
 
 use std::collections::HashMap;
 // use kcnet_lib::{*};
-use kcnet_lib::{json_handler, log_handler::logger, json_handler::Vec2D, json_handler::Vec3D};
+use kcnet_lib::{json_handler, log_handler::logger, json_handler::Vec2D, json_handler::Vec3D, os_util};
 use kcnet_lib::json_handler::{MapLocation, Player, PlayerState};
 use kcnet_lib::hash_util;
 
@@ -35,6 +35,7 @@ use log::{debug, error, info};
 use std::env;
 use std::error::Error;
 use std::future::Future;
+use std::path::PathBuf;
 use std::pin::Pin;
 use std::task::{Context, Poll};
 use std::time::{Duration, Instant};
@@ -56,6 +57,8 @@ use serde_json::json;
 use openssh::{Session, KnownHosts};
 use crate::ssh_handler::LinuxCommand;
 
+use clap::Parser;
+
 // List of enviornment variables
 // https://doc.rust-lang.org/cargo/reference/environment-variables.html
 const PROGRAM_NAME: &'static str = env!("CARGO_PKG_NAME");
@@ -71,8 +74,8 @@ const LOG_CONFIG: &'static str = "logging_config.yaml";
 /// `min_range` The minimum range for the coordinates.
 ///
 /// `max_range` The maximum range for the coordinates.
-// fn generate_random_position(min_range: f32, max_range: f32) -> Vec3D {
-fn generate_random_position(min_range: f32, max_range: f32) -> Vector2D<f32> {
+fn generate_random_position(min_range: f32, max_range: f32) -> Vec3D {
+// fn generate_random_position(min_range: f32, max_range: f32) -> Vector2D<f32> {
     // println!("Generating random position");
     // https://docs.rs/rand/latest/rand/
 
@@ -82,12 +85,17 @@ fn generate_random_position(min_range: f32, max_range: f32) -> Vector2D<f32> {
 
     let random_pos1 = rng.random_range(min_range..max_range);
     let random_pos2 = rng.random_range(min_range..max_range);
+    let random_pos3 = rng.random_range(min_range..max_range);
 
     // println!("Float: {}", rng.random_range(min_range..max_range));
     // println!("Random number: {random_number}");
 
-    Vector2D::new(random_pos1, random_pos2)
-    // Vec3D::new(random_pos1)
+    // let test_pos = Vec3D::new(random_pos1, random_pos2, random_pos3);
+    // Get some random positions for the X, Y, and Z values.
+    Vec3D::new(random_pos1, random_pos2, random_pos3)
+
+    // Vector2D::new(random_pos1, random_pos2)
+
 }
 
 // Well I need to learn more error handling in Rust before I move on with it.
@@ -234,6 +242,7 @@ fn player_test() {
 
     let player = Player {
         name: "Admin".parse().unwrap(),
+        score: 0,
         health: random_health,
         armor: random_armor,
         hunger: random_hunger,
@@ -365,8 +374,11 @@ async fn main() {
     // https://env.dev/guides/rust-env-variables
     dotenvy::dotenv().ok();
 
-    let ssh_username = env::var("SSH_USERNAME").unwrap_or_default();
-    let ssh_host = env::var("SSH_HOST").unwrap_or_default();
+    // SSH env variables.
+    // let ssh_username = env::var("SSH_USERNAME").unwrap_or_default();
+    // let ssh_host = env::var("SSH_HOST").unwrap_or_default();
+
+    let home_user = env::var("HOME_USER").unwrap_or_default();
 
     // info!(".env loaded");
 
@@ -419,8 +431,8 @@ async fn main() {
     // env_test();
 
 
-    // Plaer struct testing
-    // player_test()
+    // Player struct testing
+    player_test();
 
     // Async testing
     // test_async(rng).await;
@@ -448,16 +460,28 @@ async fn main() {
     //     println!("Password does not match! Cannot login.");
     // }
 
-    let hash_test = hash_map_test();
+    // let hash_test = hash_map_test();
+    // Test with invalid values.
     // println!("Hash map test: {}", hash_test.get("Player12").unwrap());
-    println!("Hash map test: {}", hash_test.get("Player1").expect("Hash Map Test: Value doesn't exist or was blank."));
+    // println!("Hash map test: {}", hash_test.get("Player1").expect("Hash Map Test: Value doesn't exist or was blank."));
 
     //--------
 
     //--------
     // SSH Test
     // This can send a command to an SSH server for testing.
-    ssh_handler::ssh_test(&ssh_username, &ssh_host, LinuxCommand::LS).await.expect("SSH testing failed.");
+    // ssh_handler::ssh_test(&ssh_username, &ssh_host, LinuxCommand::LS).await.expect("SSH testing failed.");
+    //
+
+    //--------
+    // Check the users home directory
+    // https://idiomatic-rust-snippets.org/essentials/std-lib/some.html
+
+    // I got this working
+    // let user_home_dir = os_util::get_home_dir(&home_user);
+    // println!("Home user: {}", user_home_dir.unwrap().display());
+    // println!("Home user: {:#?}", user_home_dir);
+
     //
 
 }

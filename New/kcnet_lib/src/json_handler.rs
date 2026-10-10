@@ -41,6 +41,7 @@ pub enum PlayerState {
 /// Very basic player for testing structs
 pub struct Player {
     pub name: String,
+    pub score: i32,
     // pub position: Vector2D::new(0, 0.0);
     pub health: i32,
     pub armor: i32,
@@ -48,7 +49,8 @@ pub struct Player {
     pub status: PlayerState,
     // pub ipv4_address: String,
     // pub ipv6_address: String,
-    pub position: Vector2D<f32>,
+    // pub position: Vector2D<f32>,
+    pub position: Vec3D,
     // pub camera_position: Vector2D<f32>,
     pub heading: f32,
 }
